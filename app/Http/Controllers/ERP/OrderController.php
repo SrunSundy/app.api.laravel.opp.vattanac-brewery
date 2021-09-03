@@ -106,9 +106,9 @@ class OrderController extends Controller
             if(Order::isOrderExisted($this->params)){
                 Order::updateStatus($this->params);
                 DB::commit();
-                return $this->ok(["resp_msg" => "success"]);
+                return $this->ok(__('auth.success'));
             }else{
-                return $this->fail(["resp_msg" => __('auth.record_not_found')]);
+                return $this->fail(__('auth.record_not_found'));
                 DB::rollBack();
             }
         }catch(Exc∏eption $e){
