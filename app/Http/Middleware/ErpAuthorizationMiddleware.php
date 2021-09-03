@@ -59,8 +59,8 @@ class ErpAuthorizationMiddleware
             $header_value = request()->header($header);
 
             if (!filled($header_value)) {
-                if ($index < count($headers) - 1) {
-                    $required_text .=  "$header, ";
+                if ($required_text) {
+                    $required_text .= ", $header";
                 } else {
                     $required_text .=  "$header";
                 }
