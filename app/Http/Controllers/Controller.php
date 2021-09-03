@@ -18,7 +18,7 @@ class Controller extends BaseController
      */
     public function getParams()
     {
-        $this->params['offset'] = request()->get('offset', 0) ?? 0;
+        $this->params['page'] = request()->get('page', 1) ?? 1;
         $this->params['limit'] = request()->get('limit', 10) ?? 10;
         $this->params['search'] = request()->get('search');
         $this->params['order'] = request()->get('order', 'created_at') ?? 'created_at';

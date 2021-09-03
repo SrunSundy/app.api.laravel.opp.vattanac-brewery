@@ -35,10 +35,14 @@ function countList($data)
  * @return Illuminate\Database\Eloquent\Collection
  */
 function offsetLimit($data, $params)
-{
+{   
+
+    $page = $params['page'];
+    $limit = $params['limit'];
+    $offset = ($limit * $page) - $limit;
     return $data
-        ->offset($params['offset'])
-        ->limit($params['limit'])
+        ->offset($offset)
+        ->limit($limit)
         ->get();
 }
 
