@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
 use App\Models\Order;
 use Exception;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -111,7 +111,7 @@ class OrderController extends Controller
                 return $this->fail(__('auth.record_not_found'), 404);
                 DB::rollBack();
             }
-        }catch(Exc∏eption $e){
+        }catch(Exception $e){
             DB::rollBack();
             return $this->fail($e->getMessage() , 500);
         }
