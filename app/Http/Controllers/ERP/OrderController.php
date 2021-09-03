@@ -19,14 +19,37 @@ class OrderController extends Controller
      */
     public function index()
     {
+        
+    }
+
+    public function orderByOutlet($outlet_id){
         try {
             $this->getParams();
-            $this->params["outlet_id"] = request()->get('outlet_id');
+            $this->params["outlet_id"] = $outlet_id;
             $list = Order::list($this->params);
             $list['list'] = ListOrderResource::collection($list['list']);
             
             return $this->ok($list);
         } catch (Exception $e) {
+            return $this->fail($e->getMessage(), 500);
+        }
+    }
+
+
+    public function orderByOutletDetail($order_number , $outlet_id){
+        try{
+            $this->getParams();
+            $this->params["outlet_id"] = $outlet_id;
+            $this->params["order_number"] = $order_number;
+
+            $item = Order::detail($this->params);
+            if(!filled($item)){
+                return $this->fail(__('auth.record_not_found'), 404);
+            }
+            $item = new ListOrderResource($item);
+           
+            return $this->ok($item);
+        }catch(Exception $e){
             return $this->fail($e->getMessage(), 500);
         }
     }
@@ -109,7 +132,7 @@ class OrderController extends Controller
             if(Order::isOrderExisted($this->params)){
                 Order::updateStatus($this->params);
                 DB::commit();
-                return $this->ok(__('auth.success'));
+                return $this->ok(['order_number' => request()->get("order_number")], __('auth.success'));
             }else{
                 return $this->fail(__('auth.record_not_found'), 404);
                 DB::rollBack();

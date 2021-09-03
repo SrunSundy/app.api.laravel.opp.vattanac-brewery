@@ -11,9 +11,9 @@ trait ResponseTrait
      * @param int $code
      * @return \Illuminate\Http\JsonResponse
      */
-    public function ok($data, $code = 200)
+    public function ok($data, $message = '', $code = 200)
     {
-        return response()->json(['success' => true, 'data' => $data], $code);
+        return response()->json(['success' => true, 'message' => $message, 'data' => $data], $code);
     }
 
     /**

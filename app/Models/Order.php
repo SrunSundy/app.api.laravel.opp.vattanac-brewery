@@ -29,6 +29,12 @@ class Order extends Model
         return $this->outlet->outlet_name ?? '';
     }
 
+    public function getOrderStatusAttribute()
+    {
+        return $this->orderState->state_label ?? '';
+    }
+
+
     /*
     |------------------------------------------------------------ 
     | SCOPES
@@ -36,7 +42,7 @@ class Order extends Model
     */
     public function scopeFilter($query, $params)
     {
-        return $query;
+        return $query->where("outlet_id", $params["outlet_id"]);
     }
 
     /*
@@ -56,6 +62,10 @@ class Order extends Model
     public function outlet(){
         return $this->belongsTo(Outlet::class , "outlet_id");
     }
+     
+    public function orderState(){
+        return $this->belongsTo(OrderState::class, "state_id", 'order_state_code');
+    }
 
     /*
     |------------------------------------------------------------ 
@@ -66,6 +76,13 @@ class Order extends Model
 
         $list = self::filter($params);
         return listLimit($list, $params);
+    }
+
+    public static function detail($params){
+        $data = self::where("order_number", $params["order_number"])
+            ->where("outlet_id", $params["outlet_id"])
+            ->first();
+        return $data;
     }
 
     public static function updateStatus($param){

@@ -14,7 +14,10 @@ class ListOrderResource extends JsonResource
      */
     public function toArray($request)
     {
-        return $this->only('id', 'order_number','outlet_name', 'agent_name', 'coupon_code',);
+        return $this->only('id', 'order_number','outlet_name'
+                ,'agent_name', 'coupon_code','sub_total'
+                ,'percent_off' , 'amount_off','total'
+                ,'is_urgent','order_status');
         // return parent::toArray($request);
     }
 }
