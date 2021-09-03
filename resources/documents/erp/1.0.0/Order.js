@@ -6,8 +6,8 @@
  *
  * @apiUse PostHeader
  * 
- * @apiParam {string}           order_number             The order number which get from OPP
- * @apiParam {int=0,1,2}        order_status             The status of order to update. `0` => Pending, `1` => Complete, `2` => Cancel
+ * @apiParam {string}                 order_number             The order number which get from OPP
+ * @apiParam {int=202,200,499}        order_status             The status of order to update. `202` => Pending, `200` => Complete, `499` => Cancel
  *
  * @apiExample {curl} Request usage:
  {
