@@ -23,7 +23,7 @@ class ErpAuthorizationMiddleware
     {
         $required_text = $this->checkRequiredHeader(['Grant-Type', 'Client-Id', 'Client-Secret', 'Authorization']);
         if (filled($required_text)) {
-            return $this->fail(__('validation.required', ['attribute' => $required_text]), 401);
+            return $this->fail(__('validation.required', ['attribute' => $required_text]), 400);
         }
 
         if (!$this->checkHeaderValue(['Grant-Type', 'Client-Id', 'Client-Secret'])) {
@@ -32,21 +32,21 @@ class ErpAuthorizationMiddleware
 
         $authorization = explode(" ", request()->header('Authorization'));
         if (count($authorization) !== 2 || $authorization[0] !== config('erp.credential.token_type')) {
-            return $this->fail('Authorization requires Bearer', 403);
+            return $this->fail('Authorization requires Bearer', 401);
         }
 
         $decrypted = explode( "-", EncryptLib::decryptString($authorization[1] ?? ''));
         $variance = (int) config('erp.credential.cipher.variance');
         if(count($decrypted) !== 3) {
-            return $this->fail(__('auth.unauthorized'), 403);
+            return $this->fail(__('auth.unauthorized'), 401);
         }
 
         if (!$this->checkEncryptValue(['Client-Id' => $decrypted[0], 'Client-Secret' => $decrypted[1]])) {
-            return $this->fail(__('auth.unauthorized'), 403);
+            return $this->fail(__('auth.unauthorized'), 401);
         }
 
         if (DateLib::getSecondFromTimeStamp($decrypted[2]) > $variance) {
-            return $this->fail(__('auth.unauthorized'), 403);
+            return $this->fail(__('auth.unauthorized'), 401);
         }
 
         return $next($request);
