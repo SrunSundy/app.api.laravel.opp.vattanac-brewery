@@ -1,0 +1,16 @@
+{
+    "name": "OPP API doc",
+    "version": "1.0.0",
+    "description": "",
+    "title": "ERP integration",
+    "url": "http://35.198.218.230/api",
+    "sampleUrl": null,
+    "header": {
+        "title": "",
+        "filename": "header.md"
+    },
+    "footer": {
+        "title": "",
+        "filename": "footer.md"
+    }
+}
