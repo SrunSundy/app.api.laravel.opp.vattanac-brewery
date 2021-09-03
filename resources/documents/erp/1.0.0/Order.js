@@ -94,7 +94,7 @@
  * @apiExample {curl} Request usage:
  {
     "order_number" : "SO20210800010",
-    "order_status" : 1
+    "order_status" : 200
  }
  *
  * @apiSuccessExample  Response (example):
