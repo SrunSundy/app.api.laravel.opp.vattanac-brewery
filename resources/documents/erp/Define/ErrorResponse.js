@@ -1,68 +1,27 @@
 /**
- * @apiDefine TokenExpired
+ * @apiDefine MissingHeader
  *
- * @apiError (4xx) {400} TokenExpired Token is expired
+ * @apiError (4xx) {400} MissingHeader  The header is missing.
  *
- * @apiErrorExample {json} 400 (TokenExpired):
+ * @apiErrorExample {json} 400 (MissingHeader):
  HTTP/1.1 400 Bad Request
  {
     "success": false,
-    "message": "The token is expired."
+    "message": "The Grant-Type, Client-Id, Client-Secret, Authorization field is required."
  }
- */
-
-/**
- * @apiDefine OtpIncorrect
  *
- * @apiError (4xx) {400} OtpIncorrect The Otp is incorrect.
- *
- * @apiErrorExample {json} 400 (OtpIncorrect):
- HTTP/1.1 400 Bad Request
- {
-    "success": false,
-    "message": "The verify code confirmation does not match."
- }
- */
-
-/**
- * @apiDefine IncorrectUsernamePassword
- *
- * @apiError (4xx) {400} IncorrectUsernamePassword Username or Password is incorrect.
- *
- * @apiErrorExample {json} 400 (IncorrectUsernamePassword):
- HTTP/1.1 400 Bad Request
- {
-    "success": false,
-    "message": "The username/password is incorrect."
- }
  */
 
 /**
  * @apiDefine AuthorizationInvalid
  *
- * @apiError (4xx) {401} AuthorizationInvalid  authorization token is missing, expire, or invalid.
+ * @apiError (4xx) {401} AuthorizationInvalid  The dynamic token is invalid or expired.
  *
  * @apiErrorExample {json} 401 (AuthorizationInvalid):
  HTTP/1.1 401 Unauthorized
  {
     "success": false,
-    "code": 100,
-    "message": "The authorization is invalid."
- }
- *
- */
-
-/**
- * @apiDefine AuthInvalid
- *
- * @apiError (4xx) {401} AuthInvalid  auth token is missing, expire, or invalid.
- *
- * @apiErrorExample {json} 401 (AuthInvalid):
- HTTP/1.1 401 Unauthorized
- {
-    "success": false,
-    "code": 101,
-    "message": "user is unauthorized. The token is invalid."
+    "message": "Unauthorized request"
  }
  *
  */
@@ -100,10 +59,10 @@
 /**
  * @apiDefine ErrorValidation
  *
- * @apiError (4xx) {412} ErrorValidation validation of required, format, min, max, ....
+ * @apiError (4xx) {422} ErrorValidation validation of required, format, min, max, ....
  *
- * @apiErrorExample {json} 412 (ErrorValidation):
- HTTP/1.1 401 Unauthorized
+ * @apiErrorExample {json} 422 (ErrorValidation):
+ HTTP/1.1 422 Unauthorized
  {
     "success": false,
     "message": {
