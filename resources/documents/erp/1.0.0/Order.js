@@ -18,9 +18,9 @@
         "list": [
             {
                 "id": 38,
-                "order_number": "SO20210800038",
-                "outlet_name": "Sokahkrom",
-                "agent_name": "Sophanith",
+                "order_number": "SO20210800010",
+                "outlet_name": "Cheng Mom",
+                "agent_name": "Srey Mom",
                 "coupon_code": "",
                 "sub_total": 20.6,
                 "percent_off": 0,
@@ -59,9 +59,9 @@
     "message": "",
     "data": {
         "id": 38,
-        "order_number": "SO20210800038",
-        "outlet_name": "Sokahkrom",
-        "agent_name": "Sophanith",
+        "order_number": "SO20210800010",
+        "outlet_name": "Cheng Mom",
+        "agent_name": "Srey Mom",
         "coupon_code": "",
         "sub_total": 20.6,
         "percent_off": 0,
