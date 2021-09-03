@@ -62,10 +62,8 @@
  * @apiErrorExample {json} 404 (Not Found):
  HTTP/1.1 404 Not Found
  {
-   "success": false,
-   "message": {
-        "resp_msg": "record not found!"
-   }
+    "success": false,
+    "message": "record not found!"
  }
  *
  */

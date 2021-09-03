@@ -1,11 +1,10 @@
 /**
  * @apiDefine DefaultListParameter
  *
- * @apiParam {string}  search      Key search resource
- * @apiParam {integer} offset      Offset of list resource
- * @apiParam {integer} limit       Limit of list resource
- * @apiParam {string} sort         Sort of list resource. eg. sort=asc|desc
- * @apiParam {string} order        Ordering field to sort. eg. order=updated_at
+ * @apiParam {integer}           [page=1]                       Pagination
+ * @apiParam {integer}           [limit=10]                     Limit of the records per response
+ * @apiParam {string=asc,desc}   [sort=desc]                    Direction of sorting records. eg. `sort=asc` or `sort=desc`
+ * @apiParam {string}            [order=created_at]             Field to sort the records. eg. order=updated_at
  */
 
 /**
