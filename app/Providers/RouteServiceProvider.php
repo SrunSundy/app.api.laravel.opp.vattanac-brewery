@@ -53,7 +53,7 @@ class RouteServiceProvider extends ServiceProvider
 
     protected function mapErpRoute()
     {
-        return Route::prefix('api/v1/erp')
+        return Route::prefix('v1/erp')
             ->middleware('api', 'authorization.erp')
             ->namespace($this->namespace)
             ->group(base_path('routes/erp/api.php'));

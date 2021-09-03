@@ -108,7 +108,7 @@ class OrderController extends Controller
                 DB::commit();
                 return $this->ok(__('auth.success'));
             }else{
-                return $this->fail(__('auth.record_not_found'));
+                return $this->fail(__('auth.record_not_found'), 404);
                 DB::rollBack();
             }
         }catch(Exc∏eption $e){
