@@ -1,5 +1,5 @@
 /**
- * @api {Post} /v1/erp/order/list/outlet/{outlet_id} 1. List order by outlet
+ * @api {Get} /v1/erp/order/list/outlet/{outlet_id} 1. List order by outlet
  * @apiVersion 1.0.0
  * @apiName List order by outlet
  * @apiGroup Order
@@ -37,12 +37,12 @@
  * @apiUse MissingHeader
  * @apiUse AuthorizationInvalid
  * @apiUse HeaderInvalid
- * @apiUse ErrorValidation
+ * @apiUse MethodNotAllowed
  * @apiUse ServerServerError
  */
 
 /**
- * @api {Post} /v1/erp/order/{order_number}/outlet/{outlet_id} 2. View order by outlet
+ * @api {Get} /v1/erp/order/{order_number}/outlet/{outlet_id} 2. View order by outlet
  * @apiVersion 1.0.0
  * @apiName View order by outlet
  * @apiGroup Order
@@ -75,7 +75,8 @@
  * @apiUse MissingHeader
  * @apiUse AuthorizationInvalid
  * @apiUse HeaderInvalid
- * @apiUse ErrorValidation
+ * @apiUse NotFound
+ * @apiUse MethodNotAllowed
  * @apiUse ServerServerError
  */
 
@@ -110,6 +111,7 @@
  * @apiUse AuthorizationInvalid
  * @apiUse HeaderInvalid
  * @apiUse NotFound
+ * @apiUse MethodNotAllowed
  * @apiUse ErrorValidation
  * @apiUse ServerServerError
  */
