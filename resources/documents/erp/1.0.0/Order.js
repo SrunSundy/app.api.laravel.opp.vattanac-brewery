@@ -9,7 +9,7 @@
  * @apiParam {string}           order_number             The order number which get from OPP
  * @apiParam {int=0,1,2}        order_status             The status of order to update. `0` => Pending, `1` => Complete, `2` => Cancel
  *
- * @apiExample {curl} Example usage:
+ * @apiExample {curl} Request usage:
  {
     "order_number" : "SO20210800010",
     "order_status" : 1
@@ -19,11 +19,15 @@
  HTTP/1.1 200 Success Request
  {
     "success": true,
-    "data": "Success"
+    "message": "Success",
+    "data": {
+        "order_number" : "SO20210800010"
+    }
  }
  *
  * @apiUse MissingHeader
  * @apiUse AuthorizationInvalid
+ * @apiUse HeaderInvalid
  * @apiUse NotFound
  * @apiUse ErrorValidation
  * @apiUse ServerServerError
