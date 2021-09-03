@@ -23,7 +23,7 @@ class ErpAuthorizationMiddleware
     {
         $required_text = $this->checkRequiredHeader(['Grant-Type', 'Client-Id', 'Client-Secret', 'Authorization']);
         if (filled($required_text)) {
-            return $this->fail(__('validation.required', ['attribute' => $required_text]), 400);
+            return $this->fail(__('validation.required', ['attribute' => $required_text]), 401);
         }
 
         if (!$this->checkHeaderValue(['Grant-Type', 'Client-Id', 'Client-Secret'])) {

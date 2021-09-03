@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ERP;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
+use App\Http\Resources\Erp\Order\ListOrderResource;
 use App\Models\Order;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -21,13 +22,14 @@ class OrderController extends Controller
         try {
             $this->getParams();
             $this->params["outlet_id"] = request()->get('outlet_id');
-            return $this->ok(Order::list($this->params));
+            $list = Order::list($this->params);
+            $list['list'] = ListOrderResource::collection($list['list']);
+            
+            return $this->ok($list);
         } catch (Exception $e) {
             return $this->fail($e->getMessage(), 500);
         }
     }
-
-    
 
     /**
      * Show the form for creating a new resource.
@@ -98,6 +100,7 @@ class OrderController extends Controller
 
     public function updateStatus(OrderRequest $request){
         try{
+
             DB::beginTransaction();
 
             $this->params["order_number"] = request()->get("order_number");

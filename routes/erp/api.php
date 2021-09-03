@@ -7,4 +7,5 @@ use App\Http\Controllers\ERP\OrderController;
 
 Route::group(['prefix' => 'order'], function () {
     Route::post("/status/update", [OrderController::class , 'updateStatus']);
+    Route::get("/list", [OrderController::class , 'index']);
 });
