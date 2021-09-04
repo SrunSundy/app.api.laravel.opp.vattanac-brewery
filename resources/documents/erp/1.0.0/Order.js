@@ -1,5 +1,5 @@
 /**
- * @api {Get} /v1/erp/order/list/outlet/{outlet_id} 1. List order by outlet
+ * @api {Get} /v1/erp/order/list/outlet/${outlet_id} 1. List order by outlet
  * @apiVersion 1.0.0
  * @apiName List order by outlet
  * @apiGroup Order
@@ -17,20 +17,20 @@
     "data": {
         "list": [
             {
-                "id": 38,
-                "order_number": "SO20210800010",
-                "outlet_name": "Cheng Mom",
-                "agent_name": "Srey Mom",
+                "id": 8,
+                "order_number": "SO20210900008",
+                "outlet_name": "SRUN SUNDY",
+                "agent_name": "Sopheamen Van",
                 "coupon_code": "",
-                "sub_total": 20.6,
+                "sub_total": 83.99,
                 "percent_off": 0,
                 "amount_off": 0,
-                "total": 20.6,
+                "total": 83.99,
                 "is_urgent": 0,
                 "order_status": "Pending"
             }
         ],
-        "total": 20
+        "total": 3
     }
  }
  *
@@ -42,7 +42,7 @@
  */
 
 /**
- * @api {Get} /v1/erp/order/{order_number}/outlet/{outlet_id} 2. View order by outlet
+ * @api {Get} /v1/erp/order/${order_number}/outlet/${outlet_id} 2. View order by outlet
  * @apiVersion 1.0.0
  * @apiName View order by outlet
  * @apiGroup Order
@@ -58,15 +58,15 @@
     "success": true,
     "message": "",
     "data": {
-        "id": 38,
-        "order_number": "SO20210800010",
-        "outlet_name": "Cheng Mom",
-        "agent_name": "Srey Mom",
+        "id": 8,
+        "order_number": "SO20210900008",
+        "outlet_name": "SRUN SUNDY",
+        "agent_name": "Sopheamen Van",
         "coupon_code": "",
-        "sub_total": 20.6,
+        "sub_total": 83.99,
         "percent_off": 0,
         "amount_off": 0,
-        "total": 20.6,
+        "total": 83.99,
         "is_urgent": 0,
         "order_status": "Pending"
     }
@@ -93,7 +93,7 @@
  *
  * @apiExample {curl} Request usage:
  {
-    "order_number" : "SO20210800010",
+    "order_number" : "SO20210900008",
     "order_status" : 200
  }
  *
@@ -103,7 +103,7 @@
     "success": true,
     "message": "Success",
     "data": {
-        "order_number" : "SO20210800010"
+        "order_number" : "SO20210900008"
     }
  }
  *
