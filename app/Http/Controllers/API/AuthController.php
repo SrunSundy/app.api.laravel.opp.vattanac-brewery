@@ -20,7 +20,7 @@ class AuthController extends Controller
             'contact_number' => $request->phone_number,
             'password' => $request->password,
         ])) {
-            return $this->fail(__('validation.incorrect', ['attribute' => __('validation.attributes.phone_number_or_password')]), 401);
+            return $this->fail(__('validation.incorrect', ['attribute' => __('validation.attributes.phone_number_or_password')]));
         }
 
         return $this->ok($this->respondWithToken($token));
@@ -35,7 +35,7 @@ class AuthController extends Controller
     {
         Auth::logout();
 
-        return $this->ok('', __('dialog.success', ['action' => __('dialog.action.logout')]));
+        return $this->ok(null, __('dialog.success', ['action' => __('dialog.action.logout')]));
     }
 
     /**

@@ -23,20 +23,20 @@ class ApiAuthorizationnMiddleware
     {
         $authorization = explode(" ", request()->header('Authorization'));
         if (count($authorization) !== 2) {
-            return $this->fail(__('auth.unauthorized'), 401, 100);
+            return $this->fail(__('auth.unauthorized'), 403, 100);
         }
 
         $decrypted = explode("[-]", EncryptLib::decryptString($authorization[1] ?? '', config('api.credential.cipher.password'), config('api.credential.cipher.iv')));
         $variance = (int) config('api.credential.cipher.variance');
         if (count($decrypted) !== 2) {
-            return $this->fail(__('auth.unauthorized'), 401, 100);
-        }
-        
-        if (DateLib::getSecondFromTimeStamp($decrypted[1]) > $variance) {
-            return $this->fail(__('auth.unauthorized'), 401, 101);
+            return $this->fail(__('auth.unauthorized'), 403, 100);
         }
 
-        request()->headers->set('Authorization', 'bearer ' . $decrypted[0]);
+        if (DateLib::getSecondFromTimeStamp($decrypted[1]) > $variance) {
+            return $this->fail(__('auth.unauthorized'), 403, 101);
+        }
+
+        request()->headers->set('Authorization', $authorization[0] . ' ' . $decrypted[0]);
 
         return $next($request);
     }

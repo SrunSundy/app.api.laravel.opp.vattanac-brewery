@@ -20,7 +20,7 @@ use App\Http\Controllers\Api\AuthController;
 Route::group([
     'prefix' => 'auth'
 ], function ($router) {
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
     Route::middleware(['authorization.api'])->group(function () {
         Route::post('/refresh', [AuthController::class, 'refresh']);
     });
