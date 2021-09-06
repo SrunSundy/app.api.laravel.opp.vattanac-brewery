@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 
 class AdvertisementController extends Controller
 {
+   
     /**
      * Display a listing of the resource.
      *
@@ -40,9 +41,6 @@ class AdvertisementController extends Controller
     {
         try {
             $item = $advertisement;
-            if(!filled($item)){
-                return $this->fail(__('auth.record_not_found'), 404);
-            }
             $item = new DetailAdvertisementResource($item);
             return $this->ok($item);
         } catch (Exception $e) {

@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Http\Traits\ModelHelperTrait;
+use App\Scopes\ActiveScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Advertisement extends Model
 {
@@ -15,9 +17,21 @@ class Advertisement extends Model
     | SCOPES
     |------------------------------------------------------------
     */
-    public function scopeFilter($query, $params)
+
+    public static function boot()
     {
-        //return $query->where("outlet_id", $params["outlet_id"]);
+        parent::boot();
+        static::addGlobalScope(new ActiveScope);
+    }
+
+
+    public function scopeFilter($query, $params)
+    {   
+        $now = get_current_datetime();
+        return $query->where(
+            DB::raw("(CASE WHEN end_date <= '".$now."' THEN -1 WHEN end_date >= '".$now."' and start_date <= '".$now."' THEN 1 ELSE 0 END)"),
+            1
+        );
     }
     
     /*

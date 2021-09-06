@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Traits\ModelHelperTrait;
+use App\Scopes\ActiveScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +16,13 @@ class Brand extends Model
     | SCOPES
     |------------------------------------------------------------
     */
+    public static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new ActiveScope);
+    }
+
+    
     public function scopeFilter($query, $params)
     {
         //return $query->where("outlet_id", $params["outlet_id"]);

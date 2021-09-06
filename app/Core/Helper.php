@@ -1,6 +1,13 @@
 <?php 
 
 
+function get_current_datetime()
+{
+    $dt = new DateTime('now', new DateTimeZone("Asia/phnom_penh"));
+    $now = $dt->format('Y-m-d H:i:s');
+    return $now;
+}
+
 /**
  * Sort list of data
  *

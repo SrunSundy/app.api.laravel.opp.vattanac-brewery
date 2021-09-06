@@ -7,6 +7,7 @@ use App\Http\Resources\API\Category\DetailCategoryResource;
 use App\Http\Resources\API\Category\ListCategoryResource;
 use App\Models\Category;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller 
 {
     
+
     /**
      * Display a listing of the resource.
      *
@@ -39,14 +41,11 @@ class CategoryController extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($category)
+    public function show(Category $category)
     {
         try {
            
             $item = $category;
-            if(!filled($item)){
-                return $this->fail(__('auth.record_not_found'), 404);
-            }
             $item = new DetailCategoryResource($item);
             return $this->ok($item);
         } catch (Exception $e) {

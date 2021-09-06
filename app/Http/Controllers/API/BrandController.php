@@ -36,13 +36,10 @@ class BrandController extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($brand)
+    public function show(Brand $brand)
     {
         try {
             $item = $brand;
-            if(!filled($item)){
-                return $this->fail(__('auth.record_not_found'), 404);
-            }
             $item = new DetailBrandResource($item);
             return $this->ok($item);
         } catch (Exception $e) {
