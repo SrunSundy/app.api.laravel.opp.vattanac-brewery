@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\ModelHelperTrait;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -10,7 +11,7 @@ use App\Http\Traits\ResponseTrait;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, ResponseTrait;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, ResponseTrait , ModelHelperTrait ;
 
     protected $params = [];
      /**

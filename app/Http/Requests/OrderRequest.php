@@ -25,7 +25,7 @@ class OrderRequest extends DefaultFormRequest
     {
         return [
             "order_number" => "required|string|max:50",
-            "order_status" => "required|integer|min:0|max:2"
+            "order_status" => "required|integer"
         ];
     }
 }

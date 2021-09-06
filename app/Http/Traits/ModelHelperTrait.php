@@ -3,7 +3,17 @@
 namespace App\Http\Traits;
 
 trait ModelHelperTrait
-{
+{   
+    /**
+     * @param $query
+     * @param int $active
+     * @return mixed
+     */
+    public function scopeActive($query, $active = 1)
+    {
+        return $query->where('is_enable', $active);
+    }
+    
     /**
      * Create or Update Data
      * 
