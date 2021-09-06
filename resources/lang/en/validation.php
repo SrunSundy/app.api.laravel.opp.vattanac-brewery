@@ -123,7 +123,9 @@ return [
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute must be a valid URL.',
     'uuid' => 'The :attribute must be a valid UUID.',
-
+    'incorrect' => 'The :attribute is incorrect.',
+    'phone' => 'The :attribute field contains an invalid number.',
+    
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
@@ -152,6 +154,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'phone_number_or_password' => 'Phone Number or Password',
+    ],
 
 ];
