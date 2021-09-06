@@ -69,6 +69,20 @@
  */
 
 /**
+ * @apiDefine MethodNotAllowed
+ *
+ * @apiError (4xx) {405} MethodNotAllowed  Use wrong method
+ *
+ * @apiErrorExample {json} 405 (Method Not Allowed):
+ HTTP/1.1 405 Method Not Allowed
+ {
+    "success": false,
+    "message": "The POST method is not supported for this route. Supported methods: GET, HEAD."
+ }
+ *
+ */
+
+/**
  * @apiDefine ErrorValidation
  *
  * @apiError (4xx) {422} ErrorValidation validation of required, format, min, max, ....
