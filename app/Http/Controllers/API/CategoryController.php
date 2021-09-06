@@ -39,12 +39,11 @@ class CategoryController extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show($category)
     {
         try {
-            $this->getParams();
-            $this->params["id"] = $id;
-            $item = Category::detail($this->params);
+           
+            $item = $category;
             if(!filled($item)){
                 return $this->fail(__('auth.record_not_found'), 404);
             }

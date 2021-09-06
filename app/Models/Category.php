@@ -20,11 +20,6 @@ class Category extends Model
         //return $query->where("outlet_id", $params["outlet_id"]);
     }
 
-    public function scopeDetailFilter($query, $params)
-    {
-        return $query->where("id" , $params["id"]);
-    }
-
     /*
     |------------------------------------------------------------ 
     | STATIC METHODS
@@ -34,11 +29,6 @@ class Category extends Model
 
         $list = self::filter($params)->active();
         return listLimit($list, $params);
-    }
-
-    public static function detail($params){
-        $data = self::detailFilter($params)->active()->first();
-        return $data;
     }
 
 }

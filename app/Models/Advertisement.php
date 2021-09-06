@@ -6,7 +6,7 @@ use App\Http\Traits\ModelHelperTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Brand extends Model
+class Advertisement extends Model
 {
     use HasFactory , ModelHelperTrait;
 
@@ -19,7 +19,7 @@ class Brand extends Model
     {
         //return $query->where("outlet_id", $params["outlet_id"]);
     }
-
+    
     /*
     |------------------------------------------------------------ 
     | STATIC METHODS
@@ -30,5 +30,4 @@ class Brand extends Model
         $list = self::filter($params)->active();
         return listLimit($list, $params);
     }
-
 }

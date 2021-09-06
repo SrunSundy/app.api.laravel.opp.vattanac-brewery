@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\Brand\DetailBrandResource;
-use App\Http\Resources\API\Brand\ListBrandResource;
-use App\Models\Brand;
+use App\Http\Resources\API\Advertisement\DetailAdvertisementResource;
+use App\Http\Resources\API\Advertisement\ListAdvertisementResource;
+use App\Models\Advertisement;
 use Exception;
 use Illuminate\Http\Request;
 
-class BrandController extends Controller
+class AdvertisementController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,8 +20,8 @@ class BrandController extends Controller
     {
         try {
             $this->getParams();
-            $list = Brand::list($this->params);
-            $list['list'] = ListBrandResource::collection($list['list']);
+            $list = Advertisement::list($this->params);
+            $list['list'] = ListAdvertisementResource::collection($list['list']);
             
             return $this->ok($list);
         } catch (Exception $e) {
@@ -36,14 +36,14 @@ class BrandController extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($brand)
+    public function show(Advertisement $advertisement)
     {
         try {
-            $item = $brand;
+            $item = $advertisement;
             if(!filled($item)){
                 return $this->fail(__('auth.record_not_found'), 404);
             }
-            $item = new DetailBrandResource($item);
+            $item = new DetailAdvertisementResource($item);
             return $this->ok($item);
         } catch (Exception $e) {
             return $this->fail($e->getMessage(), 500);

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AdvertisementController;
 use App\Http\Controllers\API\BrandController;
 use App\Http\Controllers\API\CategoryController;
 use Illuminate\Http\Request;
@@ -24,12 +25,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'category'], function () {
     Route::get("/", [CategoryController::class , 'index']);
-    Route::get("/{id}" , [CategoryController::class , 'show']);
+    Route::get("/{category}" , [CategoryController::class , 'show']);
 });
 
 Route::group(['prefix' => 'brand'], function () {
     Route::get("/", [BrandController::class , 'index']);
-    Route::get("/{id}" , [BrandController::class , 'show']);
+    Route::get("/{brand}" , [BrandController::class , 'show']);
+});
+
+Route::group(['prefix' => 'advertisement'], function () {
+    Route::get("/", [AdvertisementController::class , 'index']);
+    Route::get("/{advertisement}" , [AdvertisementController::class , 'show']);
 });
 
 //Route::post("/update-order-state", [OrderController::class , 'update_order_state'])->name("order.update_order_state");

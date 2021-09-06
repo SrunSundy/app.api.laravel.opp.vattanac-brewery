@@ -2,8 +2,13 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Http\Response;
 use App\Http\Traits\ResponseTrait;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -39,7 +44,7 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            //
+            
         });
     }
 
@@ -52,19 +57,40 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+
         if ($exception instanceof HttpException) {
             $code = $exception->getStatusCode();
+            $message = Response::$statusTexts[$code];
 
-            if ($code === 404) {
-                return $this->fail('Route not found', $code);
-            } else if ($code === 405) {
-                return $this->fail($exception->getMessage(), $code);
-            } else if ($code >= 500) {
-                return $this->fail($exception->getMessage(), $code);
-            }
-            
+            return $this->fail($message , $code);
         }
 
-        return parent::render($request, $exception);
+        if ($exception instanceof ModelNotFoundException) {
+            $model = strtolower(class_basename($exception->getModel()));
+            
+            return $this->fail("page not found" , Response::HTTP_NOT_FOUND);
+            //return responseFail(trans('response.model_not_found', ['attribute' => $model]), Response::HTTP_NOT_FOUND);
+        }
+
+        if ($exception instanceof AuthorizationException) {
+            return $this->fail("not forbidden" , Response::HTTP_FORBIDDEN);
+            //return responseFail($exception->getMessage(), Response::HTTP_FORBIDDEN);
+        }
+
+        if ($exception instanceof AuthenticationException) {
+            return $this->fail("unauthorized" , Response::HTTP_UNAUTHORIZED);
+            //return responseFail($exception->getMessage(), Response::HTTP_UNAUTHORIZED);
+        }
+
+        if ($exception instanceof ValidationException) {
+            $errors = $exception->validator->errors()->getMessages();
+
+            return $this->fail("Unprocessable entity" , Response::HTTP_UNPROCESSABLE_ENTITY);
+            //return responseFail($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+        // return $this->fail("Server Error" , Response::HTTP_INTERNAL_SERVER_ERROR);
+        return $this->fail($exception->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+
+        //return parent::render($request, $exception);
     }
 }
