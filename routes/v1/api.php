@@ -3,9 +3,8 @@
 use App\Http\Controllers\API\AdvertisementController;
 use App\Http\Controllers\API\BrandController;
 use App\Http\Controllers\API\CategoryController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\OrderController;
+use App\Http\Controllers\Api\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,24 +17,26 @@ use App\Http\Controllers\API\OrderController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    'prefix' => 'auth'
+], function ($router) {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
 });
 
-
 Route::group(['prefix' => 'category'], function () {
-    Route::get("/", [CategoryController::class , 'index']);
-    Route::get("/{category}" , [CategoryController::class , 'show']);
+    Route::get("/", [CategoryController::class, 'index']);
+    Route::get("/{category}", [CategoryController::class, 'show']);
 });
 
 Route::group(['prefix' => 'brand'], function () {
-    Route::get("/", [BrandController::class , 'index']);
-    Route::get("/{brand}" , [BrandController::class , 'show']);
+    Route::get("/", [BrandController::class, 'index']);
+    Route::get("/{brand}", [BrandController::class, 'show']);
 });
 
 Route::group(['prefix' => 'advertisement'], function () {
-    Route::get("/", [AdvertisementController::class , 'index']);
-    Route::get("/{advertisement}" , [AdvertisementController::class , 'show']);
+    Route::get("/", [AdvertisementController::class, 'index']);
+    Route::get("/{advertisement}", [AdvertisementController::class, 'show']);
 });
 
 //Route::post("/update-order-state", [OrderController::class , 'update_order_state'])->name("order.update_order_state");
