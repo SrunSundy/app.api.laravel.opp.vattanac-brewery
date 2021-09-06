@@ -21,7 +21,9 @@ Route::group([
     'prefix' => 'auth'
 ], function ($router) {
     Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::middleware(['authorization.api'])->group(function () {
+        Route::post('/refresh', [AuthController::class, 'refresh']);
+    });
 });
 
 Route::group(['prefix' => 'category'], function () {

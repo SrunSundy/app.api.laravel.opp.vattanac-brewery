@@ -23,8 +23,11 @@ trait ResponseTrait
      * @param int $code
      * @return \Illuminate\Http\JsonResponse
      */
-    public function fail($data, $code = 400)
+    public function fail($data, $code = 400, $custom_code = null)
     {
+        if ($custom_code) {
+            return response()->json(["success" => false, "message" => $data, 'code' => $custom_code], $code);
+        }
         return response()->json(["success" => false, "message" => $data], $code);
     }
 }

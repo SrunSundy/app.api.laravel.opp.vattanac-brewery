@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use App\Core\DateLib;
+use App\Core\EncryptLib;
+use App\Http\Traits\ResponseTrait;
+use Closure;
+use Illuminate\Http\Request;
+
+class ApiAuthorizationnMiddleware
+{
+    use ResponseTrait;
+
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle(Request $request, Closure $next)
+    {
+        $authorization = explode(" ", request()->header('Authorization'));
+        if (count($authorization) !== 2) {
+            return $this->fail(__('auth.unauthorized'), 401, 100);
+        }
+
+        $decrypted = explode("[-]", EncryptLib::decryptString($authorization[1] ?? '', config('api.credential.cipher.password'), config('api.credential.cipher.iv')));
+        $variance = (int) config('api.credential.cipher.variance');
+        if (count($decrypted) !== 2) {
+            return $this->fail(__('auth.unauthorized'), 401, 100);
+        }
+        
+        if (DateLib::getSecondFromTimeStamp($decrypted[1]) > $variance) {
+            return $this->fail(__('auth.unauthorized'), 401, 101);
+        }
+
+        request()->headers->set('Authorization', 'bearer ' . $decrypted[0]);
+
+        return $next($request);
+    }
+}

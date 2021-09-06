@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\Api\Auth\ProfileResource;
-use App\Http\Resources\Auth\TokenResource;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -37,7 +35,7 @@ class AuthController extends Controller
     {
         Auth::logout();
 
-        return $this->ok('', 'User successfully signed out');
+        return $this->ok('', __('dialog.success', ['action' => __('dialog.action.logout')]));
     }
 
     /**
@@ -71,7 +69,7 @@ class AuthController extends Controller
     {
         return [
             'access_token' => $token,
-            'token_type' => 'bearer',
+            'token_type' => config('api.credential.token_type'),
             'expires_in' => Auth::factory()->getTTL() * 60
         ];
     }
