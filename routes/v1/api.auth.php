@@ -13,4 +13,9 @@ Route::group([
     'prefix' => 'me'
 ], function ($router) {
     Route::get('/profile', [AuthController::class, 'userProfile']);
+    Route::group([
+        'prefix' => 'update'
+    ], function ($router) {
+        Route::post('/password', [AuthController::class, 'updatePassword']);
+    });
 });

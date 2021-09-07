@@ -5,5 +5,6 @@ return [
 
     'action' => [
         'logout' => 'logged out',
+        'update_your_password' => 'update your password',
     ],
 ];

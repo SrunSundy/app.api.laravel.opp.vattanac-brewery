@@ -156,6 +156,7 @@ return [
 
     'attributes' => [
         'phone_number_or_password' => 'Phone Number or Password',
+        'old_password' => 'Old Password',
     ],
 
 ];

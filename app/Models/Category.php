@@ -39,5 +39,4 @@ class Category extends Model
         $list = self::filter($params)->active();
         return listLimit($list, $params);
     }
-
 }

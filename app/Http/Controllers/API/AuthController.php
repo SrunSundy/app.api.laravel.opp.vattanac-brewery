@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\UpdatePasscodeRequest;
 use App\Http\Resources\Api\Auth\ProfileResource;
+use App\Models\Outlet;
+use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -56,6 +60,36 @@ class AuthController extends Controller
     public function userProfile()
     {
         return $this->ok(new ProfileResource(auth()->user()));
+    }
+
+    /**
+     * Get the authenticated User.
+     *
+     * @param UpdatePasscodeRequest $request
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updatePassword(UpdatePasscodeRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+            if ($user = Auth::attempt([
+                'contact_number' => auth()->user()->contact_number,
+                'password' => $request->old_password,
+            ])) {
+                $outlet = Outlet::find(auth()->user()->id);
+                $outlet->password = $request->password;
+                $outlet->save();
+
+                DB::commit();
+                return $this->ok(null, __('dialog.success', ['action' => __('dialog.action.update_your_password')]));
+            }
+            return $this->fail(__('validation.incorrect', ['attribute' => __('validation.attributes.old_password')]));
+        } catch (Exception $e) {
+            report($e);
+            DB::rollBack();
+            return $this->fail(__('auth.failed'));
+        }
     }
 
     /**
