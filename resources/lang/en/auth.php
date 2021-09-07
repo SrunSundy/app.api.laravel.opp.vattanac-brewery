@@ -17,6 +17,8 @@ return [
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'unauthorized' => 'Unauthorized request',
+    'forbidden' => 'Forbidden. Not allowed to access.',
     'success' => 'Success',
     'record_not_found' => 'record not found!',
+    'unprocessable_entity' => "Unprocessable entity",
 ];

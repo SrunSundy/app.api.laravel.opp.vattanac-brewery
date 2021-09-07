@@ -68,24 +68,24 @@ class Handler extends ExceptionHandler
         if ($exception instanceof ModelNotFoundException) {
             $model = strtolower(class_basename($exception->getModel()));
             
-            return $this->fail("page not found" , Response::HTTP_NOT_FOUND);
+            return $this->fail(__('auth.record_not_found') , Response::HTTP_NOT_FOUND);
             //return responseFail(trans('response.model_not_found', ['attribute' => $model]), Response::HTTP_NOT_FOUND);
         }
 
         if ($exception instanceof AuthorizationException) {
-            return $this->fail("not forbidden" , Response::HTTP_FORBIDDEN);
+            return $this->fail(__('auth.forbidden') , Response::HTTP_FORBIDDEN);
             //return responseFail($exception->getMessage(), Response::HTTP_FORBIDDEN);
         }
 
         if ($exception instanceof AuthenticationException) {
-            return $this->fail("unauthorized" , Response::HTTP_UNAUTHORIZED);
+            return $this->fail(__('auth.unauthorized') , Response::HTTP_UNAUTHORIZED);
             //return responseFail($exception->getMessage(), Response::HTTP_UNAUTHORIZED);
         }
 
         if ($exception instanceof ValidationException) {
             $errors = $exception->validator->errors()->getMessages();
 
-            return $this->fail("Unprocessable entity" , Response::HTTP_UNPROCESSABLE_ENTITY);
+            return $this->fail(__('auth.unprocessable_entity') , Response::HTTP_UNPROCESSABLE_ENTITY);
             //return responseFail($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         // return $this->fail("Server Error" , Response::HTTP_INTERNAL_SERVER_ERROR);

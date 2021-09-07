@@ -19,3 +19,9 @@
  * @apiHeader {string} Accept           `application/json`
  * @apiHeader {string} Authorization    `Bearer ${dynamic_token}`. `dynamic_token` get from combination of `${Access-Token}[-]${Current Timestamp}` using `AES` encryption with `CBC` mode.
  */
+
+/**
+ * @apiDefine GetHeaderWithoutAuth
+ *
+ * @apiHeader {string} Accept           `application/json`
+ */
