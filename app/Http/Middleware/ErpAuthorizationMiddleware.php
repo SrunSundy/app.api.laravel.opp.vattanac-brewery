@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Traits\ResponseTrait;
 use App\Core\EncryptLib;
 use App\Core\DateLib;
-use App\Models\Configuration;
+use App\Models\Setting;
 
 class ErpAuthorizationMiddleware
 {
@@ -34,12 +34,12 @@ class ErpAuthorizationMiddleware
         // if (count($authorization) !== 2 || $authorization[0] !== config('erp.credential.token_type')) {
         //     return $this->fail('Authorization requires Bearer', 401);
         // }
-        if (count($authorization) !== 2 || $authorization[0] !== Configuration::getValueByKey("erp.credential.token_type")) {
+        if (count($authorization) !== 2 || $authorization[0] !== Setting::getValueByKey("erp.credential.token_type")) {
             return $this->fail('Authorization requires Bearer', 401);
         }
 
         $decrypted = explode( "-", EncryptLib::decryptString($authorization[1] ?? ''));
-        $variance = (int) Configuration::getValueByKey("erp.credential.cipher.variance");
+        $variance = (int) Setting::getValueByKey("erp.credential.cipher.variance");
         if(count($decrypted) !== 3) {
             return $this->fail(__('auth.unauthorized'), 401);
         }
@@ -77,7 +77,7 @@ class ErpAuthorizationMiddleware
         foreach ($headers as $index => $header) {
             $header_value = request()->header($header);
             
-            if ($header_value !== Configuration::getValueByKey("erp.credential.".$header)) {
+            if ($header_value !== Setting::getValueByKey("erp.credential.".$header)) {
                 return false;
             }
         }

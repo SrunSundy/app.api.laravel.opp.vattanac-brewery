@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use App\Core\DateLib;
 use App\Core\EncryptLib;
 use App\Http\Traits\ResponseTrait;
-use App\Models\Configuration;
+use App\Models\Setting;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -27,8 +27,8 @@ class ApiAuthorizationnMiddleware
             return $this->fail(__('auth.unauthorized'), 403, 100);
         }
 
-        $decrypted = explode("[-]", EncryptLib::decryptString($authorization[1] ?? '', Configuration::getValueByKey('api.credential.cipher.password'), Configuration::getValueByKey('api.credential.cipher.iv')));
-        $variance = (int) Configuration::getValueByKey('api.credential.cipher.variance');
+        $decrypted = explode("[-]", EncryptLib::decryptString($authorization[1] ?? '', Setting::getValueByKey('api.credential.cipher.password'), Setting::getValueByKey('api.credential.cipher.iv')));
+        $variance = (int) Setting::getValueByKey('api.credential.cipher.variance');
         if (count($decrypted) !== 2) {
             return $this->fail(__('auth.unauthorized'), 403, 100);
         }
