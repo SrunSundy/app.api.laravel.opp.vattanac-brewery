@@ -5,6 +5,8 @@ use App\Http\Controllers\API\BrandController;
 use App\Http\Controllers\API\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\API\OutletController;
+use App\Http\Controllers\API\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +28,10 @@ Route::group([
     });
 });
 
+Route::group(['prefix' => 'outlet'] , function(){
+    Route::post("/sign_up" , [OutletController::class, 'store']);
+});
+
 Route::group(['prefix' => 'category'], function () {
     Route::get("/", [CategoryController::class, 'index']);
     Route::get("/{category}", [CategoryController::class, 'show']);
@@ -42,3 +48,5 @@ Route::group(['prefix' => 'advertisement'], function () {
 });
 
 //Route::post("/update-order-state", [OrderController::class , 'update_order_state'])->name("order.update_order_state");
+
+
