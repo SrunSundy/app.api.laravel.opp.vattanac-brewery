@@ -20,8 +20,8 @@ class Controller extends BaseController
      */
     public function getParams()
     {
-        $this->params['page'] = request()->get('page', Setting::getValueByKey("global.page")) ?? 1;
-        $this->params['limit'] = request()->get('limit', Setting::getValueByKey("global.limit")) ?? 10;
+        $this->params['page'] = request()->get('page', 1) ?? 1;
+        $this->params['limit'] = request()->get('limit', Setting::getValueByKey("global.api.limit")) ?? 10;
         $this->params['search'] = request()->get('search');
         $this->params['order'] = request()->get('order', 'created_at') ?? 'created_at';
         $this->params['sort'] = request()->get('sort', 'desc') ?? 'desc';
