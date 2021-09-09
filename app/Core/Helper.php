@@ -1,5 +1,6 @@
-<?php 
+<?php
 
+use Illuminate\Support\Arr;
 
 function get_current_datetime()
 {
@@ -99,4 +100,23 @@ function listAll($list, $params)
     $list = getAll($list);
 
     return compact('list', 'total');
+}
+
+/**
+ * Mapping request to store
+ *
+ * @param $fields
+ * @param $request
+ * @return array
+ */
+function mapRequest($fields, $request)
+{
+    $value = [];
+    foreach ($fields as $key => $field) {
+        if (Arr::has($request, $field)) {
+            $value[$field] = $request[$field];
+        }
+    }
+
+    return $value;
 }

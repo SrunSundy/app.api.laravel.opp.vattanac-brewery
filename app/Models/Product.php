@@ -68,6 +68,11 @@ class Product extends Model
         return $this->belongsTo(Brand::class,'brand_id');
     }
 
+    // public function product_reviews()
+    // {
+    //     return $this->hasMany(ProductReview::class , 'product_id');
+    // }
+
     public function my_wishlist()
     {
         return $this->hasMany(OutletWishlist::class, 'product_id')
@@ -85,9 +90,13 @@ class Product extends Model
     | STATIC METHODS
     |------------------------------------------------------------
     */
+
+    
     public static function list($params){
 
         $list = self::filter($params)->active();
         return listLimit($list, $params);
     }
+
+   
 }

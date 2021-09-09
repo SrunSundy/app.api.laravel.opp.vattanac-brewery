@@ -47,6 +47,7 @@ Route::group(['prefix' => 'advertisement'], function () {
     Route::get("/{advertisement}", [AdvertisementController::class, 'show']);
 });
 
+
 //Route::post("/update-order-state", [OrderController::class , 'update_order_state'])->name("order.update_order_state");
 
 

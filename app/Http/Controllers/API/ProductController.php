@@ -3,11 +3,16 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\Product\ProductReviewRequest;
+use App\Http\Resources\API\Product\DetailProductResource;
 use App\Http\Resources\API\Product\ListProductResource as ProductListProductResource;
+use App\Http\Resources\API\Product\ProductReviewResource;
 use App\Http\Resources\ListProductResource;
 use App\Models\Product;
+use App\Models\ProductReview;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -28,15 +33,6 @@ class ProductController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -44,10 +40,40 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductReviewRequest $request)
     {
-        //
+        try{
+            DB::beginTransaction();
+            ProductReview::store($request);
+            DB::commit();
+            return $this->ok(__('auth.success'));
+        }catch(Exception $e){
+            DB::rollBack();
+            return $this->fail($e->getMessage(), 500); 
+        }
     }
+
+
+    /**
+     * Display the product avg of review
+     * required product_id
+     */
+
+    public function review(){
+        try{
+            $this->getParams();
+            $list = ProductReview::list($this->params);
+            $list['avg_review'] = ProductReview::avgReview();
+            $list['list'] = ProductReviewResource::collection($list['list']);
+            return $this->ok($list);
+        }catch(Exception $e){
+            return $this->fail($e->getMessage(), 500);
+        }
+    }
+
+     /**
+      * end of review
+      */
 
     /**
      * Display the specified resource.
@@ -55,9 +81,21 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    // public function show($id)
+    // {
+    //     //
+    // }
+
+    public function show(Product $product)
     {
         //
+        try{
+            $item = $product;
+            $item = new DetailProductResource($item);
+            return $this->ok($item);
+        }catch(Exception $e){
+            return $this->fail($e->getMessage(), 500);
+        }
     }
 
     /**
