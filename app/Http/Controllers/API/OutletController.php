@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\Outlet\OutletWishlistRequest;
+use App\Models\OutletWishlist;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OutletController extends Controller
 {
@@ -15,6 +19,36 @@ class OutletController extends Controller
     public function index()
     {
         //
+    }
+
+    /**
+     * Display a listing of outlet's wishlist
+     */
+
+    public function wishlist(){
+        try{
+            $this->getParams();
+            $list = OutletWishlist::list($this->params);
+            //$list['list'] = ProductListProductResource::collection($list['list']);
+            return $this->ok($list);
+        }catch(Exception $e){
+            return $this->fail($e->getMessage(), 500);
+        }
+    }
+
+
+    /**
+     * add product to wishlist 
+     */
+    public function storeWishlist(OutletWishlistRequest $request){
+        try{
+            DB::beginTransaction();
+            OutletWishlist::store($request);
+            DB::commit();
+            return $this->ok(__('auth.success'));
+        }catch(Exception $e){
+            return $this->fail($e->getMessage(), 500);
+        }
     }
 
     /**

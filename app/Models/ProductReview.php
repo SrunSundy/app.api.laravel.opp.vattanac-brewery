@@ -13,6 +13,10 @@ class ProductReview extends Model
 {
     use HasFactory , ModelHelperTrait;
 
+    protected $fillable = ['outlet_id', 'product_id',
+        'rating','title',
+        'description','created_by'];
+
     /*
     |------------------------------------------------------------ 
     | SCOPES
@@ -26,6 +30,15 @@ class ProductReview extends Model
             if ($product_id) {
                 $builder->where('product_id', $product_id);
             }
+        });
+        // create a event to happen on updating
+        static::updating(function ($table) {
+            $table->updated_at = get_current_datetime() ?? null;
+        });
+
+        // create a event to happen on saving
+        static::creating(function ($table) {
+            $table->created_at = get_current_datetime() ?? null;
         });
     }
 
@@ -62,7 +75,6 @@ class ProductReview extends Model
             'description'
         ];
         $value = mapRequest($fields, $request);
-        dd($value);
         if ($id) {
             $data = self::updateOrCreate(['id' => $id], $value);
         } else {

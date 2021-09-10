@@ -40,7 +40,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductReviewRequest $request)
+    public function storeReview(ProductReviewRequest $request)
     {
         try{
             DB::beginTransaction();
@@ -52,6 +52,7 @@ class ProductController extends Controller
             return $this->fail($e->getMessage(), 500); 
         }
     }
+
 
 
     /**
@@ -116,9 +117,17 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateReview(ProductReviewRequest $request, $id)
     {
-        //
+        try{
+            DB::beginTransaction();
+            ProductReview::store($request, $id);
+            DB::commit();
+            return $this->ok(__('auth.success'));
+        }catch(Exception $e){
+            DB::rollBack();
+            return $this->fail($e->getMessage(), 500); 
+        }
     }
 
     /**

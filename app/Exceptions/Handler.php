@@ -85,7 +85,8 @@ class Handler extends ExceptionHandler
         if ($exception instanceof ValidationException) {
             $errors = $exception->validator->errors()->getMessages();
 
-            return $this->fail(__('auth.unprocessable_entity') , Response::HTTP_UNPROCESSABLE_ENTITY);
+            return parent::render($request, $exception);
+            //return $this->fail($exception->getMessage() , Response::HTTP_UNPROCESSABLE_ENTITY);
             //return responseFail($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         // return $this->fail("Server Error" , Response::HTTP_INTERNAL_SERVER_ERROR);
