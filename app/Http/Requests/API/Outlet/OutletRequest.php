@@ -4,7 +4,7 @@ namespace App\Http\Requests\API\Outlet;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class OutletWishlistRequest extends FormRequest
+class OutletRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,11 @@ class OutletWishlistRequest extends FormRequest
     public function rules()
     {
         return [
-            "product_id" => "required",
+            "owner_name" => "required|max:100",
+            "outlet_name" => "required|max:150", 
+            "phone_number" => "required|max:50|phone:kh",
+            "password" => "required|confirmed"
+            //
         ];
     }
 }

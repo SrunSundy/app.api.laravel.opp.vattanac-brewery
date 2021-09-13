@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\OutletController;
 use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\API\OrderController;
 
 Route::group([
     'prefix' => 'auth'
@@ -32,5 +34,18 @@ Route::group(['prefix' => 'product'], function(){
 
 Route::group(['prefix' => 'me'], function(){
     Route::get('/{me}/wishlist', [OutletController::class , 'wishlist']);
-    Route::get('/{me}/wishlist/store', [OutletController::class , 'storeWishlist']);
+    Route::post('/{me}/wishlist/store', [OutletController::class , 'storeWishlist']);
+    Route::get('/{me}/cart', [CartController::class , 'index']);
+    Route::post('/{me}/cart/store', [CartController::class , 'store']);
+});
+
+Route::group(['prefix' => 'order'], function(){
+    Route::get('/', [OrderController::class, 'index']);
+    Route::get('/{order}', [OrderController::class, 'show']);
+    Route::post('/store', [OrderController::class , 'store']);
+});
+
+Route::group(['prefix' => 'outlet'], function(){
+    Route::post('/feedback_app', [OutletController::class, 'sendAppFeedback']);
+    Route::post('/feedback_agent', [OutletController::class, 'sendAgentFeedback']); 
 });

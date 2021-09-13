@@ -16,6 +16,15 @@ class Outlet extends Authenticatable implements JWTSubject
         'deleted_at',
     ];
 
+    protected $fillable = [
+        'owner_name', 
+        'outlet_name', 
+        'contact_number',
+        'password',
+        'created_at',
+        'updated_at',
+    ];
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
@@ -36,6 +45,25 @@ class Outlet extends Authenticatable implements JWTSubject
         return [];
     }
 
+     /*
+    |------------------------------------------------------------ 
+    | SCOPES
+    |------------------------------------------------------------
+    */
+    public static function boot()
+    {
+        parent::boot();
+        // create a event to happen on updating
+        static::updating(function ($table) {
+            $table->updated_at = get_current_datetime() ?? null;
+        });
+
+        // create a event to happen on saving
+        static::creating(function ($table) {
+            $table->created_at = get_current_datetime() ?? null;
+        });
+    }
+
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
@@ -45,4 +73,66 @@ class Outlet extends Authenticatable implements JWTSubject
     {
         $this->attributes['password'] = Hash::make($value);
     }
+
+    /*
+    |------------------------------------------------------------ 
+    | Relations
+    |------------------------------------------------------------
+    */
+
+    public function saleUser()
+    {
+        return $this->belongsTo(SaleUser::class, 'sale_user_id');
+    }
+
+     /*
+    |------------------------------------------------------------ 
+    | ACCESSORS
+    |------------------------------------------------------------
+    */
+    public function getSaleUserNameAttribute()
+    {
+        return $this->saleUser->fullname ?? '';
+    }
+
+    public function getOutletNameKhAttribute()
+    {
+        return $this->name_kh;
+    }
+
+    public function getOutletNameEnAttribute()
+    {
+        return $this->outlet_name;
+    }
+
+     /*
+    |------------------------------------------------------------ 
+    | STATIC METHODS
+    |------------------------------------------------------------
+    */
+
+    public static function isPhoneNumberExisted($request){
+        $cnt = self::where("contact_number", request()->get("phone_number"))->count();
+        return $cnt >= 1;
+    }
+
+    public static function store($request)
+    {
+
+        request()->request->add([
+            "contact_number" => request()->get("phone_number"),
+        ]);
+
+        $fields = [
+            'owner_name',
+            'outlet_name',
+            'contact_number',
+            'password'
+        ];
+
+        $value = mapRequest($fields, $request);
+        $data = self::create($value);
+        
+        return $data;
+    }   
 }

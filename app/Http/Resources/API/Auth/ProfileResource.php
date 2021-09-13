@@ -15,6 +15,10 @@ class ProfileResource extends JsonResource
     public function toArray($request)
     {
         // return parent::toArray($request);
-        return $this->only('outlet_name', 'owner_name', 'area_code', 'agent_code', 'house_no', 'street_no', 'village', 'commune', 'district', 'province', 'latitude', 'longitude');
+        return $this->only('outlet_name_en','outlet_name_kh', 'owner_name', 'contact_number',
+            'region_code','sale_user_id','sale_user_name',
+            'agent_code', 'house_no', 'street_no',
+            'village', 'commune', 'district', 
+            'province', 'latitude', 'longitude');
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\API\Outlet;
+namespace App\Http\Requests\API\Cart;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class OutletWishlistRequest extends FormRequest
+class CartRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class OutletWishlistRequest extends FormRequest
     public function rules()
     {
         return [
-            "product_id" => "required",
+           // "outlet_id" => "required"
         ];
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Traits;
 
+use Carbon\Carbon;
+
 trait ModelHelperTrait
 {   
     /**
@@ -47,4 +49,35 @@ trait ModelHelperTrait
 
         return $data;
     }
+
+
+    /**
+     * 
+     * @params int $quantity
+     * @params float $unit_price
+     */
+    public static function calculateSubTotalAmount($quantity, $unit_price)
+    {
+        return $unit_price * $quantity;
+    }
+    /**
+     * 
+     * @params float $sub_total
+     * @params float $discount
+     * @params int $discount_type; 0 = Fixed Amount, 1 = Percentage
+     */
+    public static function calculateTotalAmount($sub_total, $discount = 0, $discount_type = 0)
+    {
+        $discount_amount = 0;
+        if ($discount_type === 0) {
+            $discount_amount = $discount;
+        } else if ($discount_type === 1) {
+            $discount_amount = ($sub_total * $discount) / 100;
+        }
+
+        return $sub_total - $discount_amount;
+    }
+
+
+   
 }

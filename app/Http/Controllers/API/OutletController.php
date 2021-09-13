@@ -3,10 +3,17 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\Outlet\AgentFeedbackRequest;
+use App\Http\Requests\API\Outlet\FeedbackRequest;
+use App\Http\Requests\API\Outlet\OutletRequest;
 use App\Http\Requests\API\Outlet\OutletWishlistRequest;
+use App\Models\Feedback;
+use App\Models\Outlet;
 use App\Models\OutletWishlist;
+use App\Models\SaleUserFeedback;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class OutletController extends Controller
@@ -47,19 +54,45 @@ class OutletController extends Controller
             DB::commit();
             return $this->ok(__('auth.success'));
         }catch(Exception $e){
+            report($e);
+            DB::rollBack();
             return $this->fail($e->getMessage(), 500);
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     /**
+     * send feedback for app
      */
-    public function create()
-    {
-        //
+    public function sendAppFeedback(FeedbackRequest $request){
+        try{
+            DB::beginTransaction();
+            feedback::store($request);
+            DB::commit();
+            return $this->ok(__('auth.success'));
+        }catch(Exception $e){
+            report($e);
+            DB::rollBack();
+            return $this->fail($e->getMessage(), 500);
+        }
     }
+
+
+    /**
+     * send feedback for agent
+     */
+    public function sendAgentFeedback(AgentFeedbackRequest $request){
+        try{
+            DB::beginTransaction();
+            SaleUserFeedback::store($request);
+            DB::commit();
+            return $this->ok(__('auth.success'));
+        }catch(Exception $e){
+            report($e);
+            DB::rollBack();
+            return $this->fail($e->getMessage(), 500);
+        }
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -67,10 +100,26 @@ class OutletController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OutletRequest $request)
     {
-        //
-        
+        try{
+            DB::beginTransaction();
+            if(Outlet::isPhoneNumberExisted($request)){
+                DB::rollBack();
+                return $this->fail(__("auth.forbidden")." Phone number already exists", 403);
+            }
+            Outlet::store($request);
+            DB::commit();
+            $token = Auth::attempt([
+                'contact_number' => $request->phone_number,
+                'password' => $request->password,
+            ]);
+            return $this->ok($this->respondWithToken($token));
+        }catch(Exception $e){
+            report($e);
+            DB::rollBack();
+            return $this->fail($e->getMessage(), 500);
+        }
     }
 
     /**
@@ -116,5 +165,21 @@ class OutletController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+     /**
+     * Get the token array structure.
+     *
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
+    {
+        return [
+            'access_token' => $token,
+            'token_type' => config('api.credential.token_type'),
+            'expires_in' => Auth::factory()->getTTL() * 60
+        ];
     }
 }

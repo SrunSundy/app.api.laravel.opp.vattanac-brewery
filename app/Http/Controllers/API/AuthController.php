@@ -42,6 +42,8 @@ class AuthController extends Controller
         return $this->ok(null, __('dialog.success', ['action' => __('dialog.action.logout')]));
     }
 
+    
+
     /**
      * Refresh a token.
      *

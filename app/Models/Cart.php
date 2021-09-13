@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OutletWishlist extends Model
+class Cart extends Model
 {
     use HasFactory;
-    protected $fillable = ['outlet_id', 'product_id','created_by'];
+    protected $fillable = ['outlet_id', 'promotion_id', 'is_urgent','created_by'];
     /*
     |------------------------------------------------------------ 
     | SCOPES
@@ -42,36 +41,29 @@ class OutletWishlist extends Model
 
     public static function list($params)
     {
-        $list = self::filter($params);
-        return listLimit($list, $params);
-    }
-
-    public static function isFavorited($params)
-    {
-        $is_existed =  self::where("outlet_id" , $params["outlet_id"])
-                    ->where("product_id", $params["product_id"])
-                    ->count();
-        return $is_existed > 0;
-    }
-
-    public static function store($request , $id = null)
-    {
-        request()->request->add([
-            "outlet_id" => auth()->user()->id
-        ]);
-        $fields = [
-            'outlet_id',
-            'product_id'
-        ];
-        $value = mapRequest($fields, $request);
-        $status = false;
-        if ($id) {
-            $status = self::updateOrCreate(['id' => $id], $value);
-        } else {
-            if(!self::isFavorited($request)){
-                $status = self::create($value);
-            }
+        $cart = self::filter($params)->first();
+        $list = [];
+        if($cart){
+            $params["cart_id"] = $cart->id;
+            $list = CartProduct::list($params);
         }
-        return $status;
+        return $list;
+    }
+
+    public static function store($request)
+    {
+        $fields = [
+            'promotion_id',
+            'is_urgent'
+        ];
+
+        $value = mapRequest($fields, $request);
+        $data = self::updateOrCreate(['outlet_id' => auth()->user()->id], $value);
+        
+        if($data){
+            //add outlet products to cart
+            CartProduct::store($request, $data->id);
+        }
+        return $data;
     }
 }

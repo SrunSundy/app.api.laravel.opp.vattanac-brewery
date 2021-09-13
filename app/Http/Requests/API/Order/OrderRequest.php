@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\API\Outlet;
+namespace App\Http\Requests\API\Order;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class OutletWishlistRequest extends FormRequest
+class OrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,11 @@ class OutletWishlistRequest extends FormRequest
     public function rules()
     {
         return [
-            "product_id" => "required",
+            //
+            "sale_user_id" => "required",
+            "sub_total" => "required|min:0",
+            "total" => "required|min:0",
+            "products" => "required",
         ];
     }
 }
