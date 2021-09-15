@@ -17,12 +17,12 @@ class Product extends Model
     */
     public function scopeFilter($query, $params)
     {   
-        if(request()->has("category_id") )
+        if(request()->has("category_id")  && filled( request()->get("category_id")) )
         {
             $query->where("category_id", request()->get("category_id"));
         }
 
-        if(request()->has("brand_id"))
+        if(request()->has("brand_id")  && filled( request()->get("brand_id")) )
         {
             $query->where("brand_id", request()->get("brand_id"));
         }
