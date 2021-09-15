@@ -10,6 +10,39 @@ class OutletWishlist extends Model
 {
     use HasFactory;
     protected $fillable = ['outlet_id', 'product_id','created_by'];
+
+     /*
+    |------------------------------------------------------------ 
+    | Relations
+    |------------------------------------------------------------
+    */
+    public function product(){
+        $this->belongsTo(Product::class , "product_id");
+    }
+
+    /*
+    |------------------------------------------------------------ 
+    | ACCESSORS
+    |------------------------------------------------------------
+    */
+
+    public function getNameAttribute(){
+        return $this->product->name;
+    }
+
+    public function getImageUrlAttribute(){
+        return $this->product->image_url;
+    }
+
+    public function getUnitPriceAttribute(){
+        return $this->product->unit_price;
+    }
+
+    public function getIsWishlistAttribute(){
+        return true;
+    }
+
+    
     /*
     |------------------------------------------------------------ 
     | SCOPES

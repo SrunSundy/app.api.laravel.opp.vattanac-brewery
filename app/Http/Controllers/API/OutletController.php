@@ -7,6 +7,7 @@ use App\Http\Requests\API\Outlet\AgentFeedbackRequest;
 use App\Http\Requests\API\Outlet\FeedbackRequest;
 use App\Http\Requests\API\Outlet\OutletRequest;
 use App\Http\Requests\API\Outlet\OutletWishlistRequest;
+use App\Http\Resources\API\Outlet\OutletWishlistResource;
 use App\Models\Feedback;
 use App\Models\Outlet;
 use App\Models\OutletWishlist;
@@ -36,7 +37,8 @@ class OutletController extends Controller
         try{
             $this->getParams();
             $list = OutletWishlist::list($this->params);
-            //$list['list'] = ProductListProductResource::collection($list['list']);
+            
+            $list['list'] = OutletWishlistResource::collection($list['list']);
             return $this->ok($list);
         }catch(Exception $e){
             return $this->fail($e->getMessage(), 500);
