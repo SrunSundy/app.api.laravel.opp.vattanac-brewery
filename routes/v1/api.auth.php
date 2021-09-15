@@ -35,6 +35,7 @@ Route::group(['prefix' => 'product'], function(){
 Route::group(['prefix' => 'me'], function(){
     Route::get('/wishlist', [OutletController::class , 'wishlist']);
     Route::post('/wishlist/store', [OutletController::class , 'storeWishlist']);
+    Route::post('/wishlist/remove', [OutletController::class , 'removeWishlist']);
     Route::get('/cart', [CartController::class , 'index']);
     Route::post('/cart/store', [CartController::class , 'store']);
 });

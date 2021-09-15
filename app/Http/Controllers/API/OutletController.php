@@ -60,6 +60,22 @@ class OutletController extends Controller
         }
     }
 
+    /**
+     * remove product from wishlist
+     */
+    public function removeWishlist(OutletWishlistRequest $request){
+        try{
+            DB::beginTransaction();
+            OutletWishlist::remove($request);
+            DB::commit();
+            return $this->ok(__('auth.success'));
+        }catch(Exception $e){
+            report($e);
+            DB::rollBack();
+            return $this->fail($e->getMessage(), 500);
+        }
+    }
+
      /**
      * send feedback for app
      */

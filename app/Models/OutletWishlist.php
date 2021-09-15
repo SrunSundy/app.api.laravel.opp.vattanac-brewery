@@ -76,4 +76,12 @@ class OutletWishlist extends Model
         }
         return $status;
     }
+
+    public static function remove($request){
+
+        $status = self::where("outlet_id", auth()->user()->id)
+                    ->where("product_id", request()->get("product_id"))
+                    ->delete();
+        return $status;
+    }
 }
