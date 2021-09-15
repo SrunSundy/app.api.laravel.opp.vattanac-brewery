@@ -33,10 +33,10 @@ Route::group(['prefix' => 'product'], function(){
 });
 
 Route::group(['prefix' => 'me'], function(){
-    Route::get('/{me}/wishlist', [OutletController::class , 'wishlist']);
-    Route::post('/{me}/wishlist/store', [OutletController::class , 'storeWishlist']);
-    Route::get('/{me}/cart', [CartController::class , 'index']);
-    Route::post('/{me}/cart/store', [CartController::class , 'store']);
+    Route::get('/wishlist', [OutletController::class , 'wishlist']);
+    Route::post('/wishlist/store', [OutletController::class , 'storeWishlist']);
+    Route::get('/cart', [CartController::class , 'index']);
+    Route::post('/cart/store', [CartController::class , 'store']);
 });
 
 Route::group(['prefix' => 'order'], function(){
