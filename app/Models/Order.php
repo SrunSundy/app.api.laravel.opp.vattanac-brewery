@@ -154,10 +154,8 @@ class Order extends Model
 
     public static function store($request)
     {
-        request()->request->add([
-            "state_id" => OrderState::getValueByKey("202"),
-            "outlet_id" => auth()->user()->id
-        ]);
+        $request["state_id"] = OrderState::getValueByKey("202");
+        $request["outlet_id"] = auth()->user()->id;
         $fields = [
             'outlet_id',
             'sale_user_id',

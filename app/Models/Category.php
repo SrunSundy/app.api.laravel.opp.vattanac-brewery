@@ -24,8 +24,11 @@ class Category extends Model
     }
 
     public function scopeFilter($query, $params)
-    {
-        //return $query->where("outlet_id", $params["outlet_id"]);
+    {   
+        if(request()->has("is_home_display")){
+            return $query->where("is_home_display", 1);
+        }
+       
     }
 
     /*

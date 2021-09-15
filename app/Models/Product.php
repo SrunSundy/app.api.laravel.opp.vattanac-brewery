@@ -27,6 +27,11 @@ class Product extends Model
             $query->where("brand_id", request()->get("brand_id"));
         }
 
+        if(request()->has("is_popular"))
+        {
+            $query->where("is_popular", 1);
+        }
+
         return $query->where("name", "like", "%".$params["search"]."%")
             ->orderBy($params["order"] , $params["sort"]);
     }

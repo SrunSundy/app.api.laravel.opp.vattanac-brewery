@@ -44,9 +44,11 @@ class SaleUserFeedback extends Model
     */
     public static function store($request)
     {
-        request()->request->add([
-            "outlet_id" => auth()->user()->id,
-        ]);
+        // request()->request->add([
+        //     "outlet_id" => auth()->user()->id,
+        // ]);
+
+        $request["outlet_id"] = auth()->user()->id;
 
         $fields = [
             'outlet_id',

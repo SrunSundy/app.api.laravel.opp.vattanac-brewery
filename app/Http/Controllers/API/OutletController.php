@@ -103,10 +103,11 @@ class OutletController extends Controller
     public function store(OutletRequest $request)
     {
         try{
+             
             DB::beginTransaction();
             if(Outlet::isPhoneNumberExisted($request)){
                 DB::rollBack();
-                return $this->fail(__("auth.forbidden")." Phone number already exists", 403);
+                return $this->fail("Phone number already exists", 403);
             }
             Outlet::store($request);
             DB::commit();

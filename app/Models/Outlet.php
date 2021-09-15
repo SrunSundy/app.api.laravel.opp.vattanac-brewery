@@ -119,9 +119,7 @@ class Outlet extends Authenticatable implements JWTSubject
     public static function store($request)
     {
 
-        request()->request->add([
-            "contact_number" => request()->get("phone_number"),
-        ]);
+        $request["contact_number"] = request()->get("phone_number");
 
         $fields = [
             'owner_name',
