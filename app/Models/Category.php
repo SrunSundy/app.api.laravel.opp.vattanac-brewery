@@ -26,8 +26,10 @@ class Category extends Model
     public function scopeFilter($query, $params)
     {   
         if(request()->has("is_home_display")){
-            return $query->where("is_home_display", 1);
+            $query->where("is_home_display", 1);
         }
+
+        $query->where("name", "like", "%".$params["search"]."%");
        
     }
 
