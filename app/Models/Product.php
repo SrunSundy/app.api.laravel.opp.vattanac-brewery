@@ -58,10 +58,11 @@ class Product extends Model
 
     public function getAvgReviewAttribute()
     {
+        return $this->product_reviews()->count();
         if($this->product_reviews()->count() <= 0){
             return 0;
         }
-        return $this->product_reviews()->sum('rating') / $this->product_reviews()->count();
+        return $this->productReviews()->sum('rating') / $this->product_reviews()->count();
     }
 
 
@@ -81,7 +82,7 @@ class Product extends Model
         return $this->belongsTo(Brand::class,'brand_id');
     }
 
-    public function product_reviews()
+    public function productReviews()
     {
         return $this->hasMany(ProductReview::class , 'product_id');
     }
