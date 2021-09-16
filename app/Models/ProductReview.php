@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use App\Http\Requests\API\Product\ProductReviewRequest;
 use App\Http\Traits\ModelHelperTrait;
-use App\Scopes\ActiveScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

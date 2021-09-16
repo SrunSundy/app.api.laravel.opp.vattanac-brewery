@@ -14,7 +14,7 @@ class DetailProductResource extends JsonResource
      */
     public function toArray($request)
     {
-        return $this->only('id', 'name','image_url', 
+        return $this->only('id', 'name','image_url','avg_review',
             'unit_price', 'is_popular','is_wishlist',
             'category_id','category_name','brand_id',
             'brand_name','short_description', 'description');

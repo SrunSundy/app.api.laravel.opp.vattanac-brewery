@@ -56,6 +56,11 @@ class Product extends Model
         return $this->brand->name ?? null;
     }
 
+    public function getAvgReviewAttribute()
+    {
+        return $this->product_reviews()->sum('rating') / $this->product_reviews()->count();
+    }
+
 
 
     /*
@@ -73,10 +78,10 @@ class Product extends Model
         return $this->belongsTo(Brand::class,'brand_id');
     }
 
-    // public function product_reviews()
-    // {
-    //     return $this->hasMany(ProductReview::class , 'product_id');
-    // }
+    public function product_reviews()
+    {
+        return $this->hasMany(ProductReview::class , 'product_id');
+    }
 
     public function my_wishlist()
     {
