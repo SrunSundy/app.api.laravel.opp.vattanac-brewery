@@ -14,6 +14,6 @@ class ProductReviewResource extends JsonResource
      */
     public function toArray($request)
     {
-        return $this->only('id','rating','title', 'description', 'created_at');
+        return $this->only('id','outlet_id', 'outlet_name', 'outlet_image','rating','title', 'description', 'created_at');
     }
 }

@@ -45,6 +45,30 @@ class ProductReview extends Model
         //return $query->where($params["product_id"]);
     }
 
+     /*
+    |------------------------------------------------------------ 
+    | Relations
+    |------------------------------------------------------------
+    */
+
+    public function outlet(){
+        $this->belongsTo(Outlet::class , "outlet_id");
+    }
+
+     /*
+    |------------------------------------------------------------ 
+    | ACCESSORS
+    |------------------------------------------------------------
+    */
+
+    public function getOutletNameAttribute(){
+        $this->outlet->owner_name;
+    }
+
+    public function getOutletImageAttribute(){
+        $this->outlet->image;
+    }
+
     /*
     |------------------------------------------------------------ 
     | STATIC METHODS
