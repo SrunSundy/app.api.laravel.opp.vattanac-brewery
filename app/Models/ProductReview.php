@@ -62,11 +62,11 @@ class ProductReview extends Model
     */
 
     public function getOutletNameAttribute(){
-        return $this->outlet->owner_name;
+        return $this->outlet->owner_name ?? "";
     }
 
     public function getOutletImageAttribute(){
-        return $this->outlet->image;
+        return $this->outlet->image ?? "";
     }
 
 
