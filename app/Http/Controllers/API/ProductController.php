@@ -65,6 +65,7 @@ class ProductController extends Controller
             $this->getParams();
             $list = ProductReview::list($this->params);
             $list['avg_review'] = ProductReview::avgReview();
+            $list["cnt_review"] = ProductReview::cntReview();
             $list['list'] = ProductReviewResource::collection($list['list']);
             return $this->ok($list);
         }catch(Exception $e){

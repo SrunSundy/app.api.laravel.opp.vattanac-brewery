@@ -69,6 +69,7 @@ class ProductReview extends Model
         return $this->outlet->image;
     }
 
+
     /*
     |------------------------------------------------------------ 
     | STATIC METHODS
@@ -85,6 +86,10 @@ class ProductReview extends Model
     {
         $avg = self::sum('rating') / self::count();
         return $avg;
+    }
+
+    public static function cntReview(){
+        return self::count();
     }
 
     public static function store($request , $id = null)
