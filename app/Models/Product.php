@@ -43,6 +43,7 @@ class Product extends Model
     */
     public function getIsWishlistAttribute()
     {
+        return $this->my_wishlist();
         return $this->my_wishlist()->count() || false;
     }
 
@@ -88,7 +89,7 @@ class Product extends Model
     }
 
     public function my_wishlist()
-    {
+    {   
         return $this->hasMany(OutletWishlist::class, 'product_id')
             ->where('outlet_id', auth()->user()->id);
     }
