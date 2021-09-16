@@ -34,7 +34,7 @@ class Product extends Model
 
         if(request()->has("product_id") &&  filled( request()->get("product_id")) )
         {
-            $query->where("product_id", "<>", request()->get("product_id"));
+            $query->where("id", "<>", request()->get("product_id"));
         }
 
         return $query->where("name", "like", "%".$params["search"]."%")
