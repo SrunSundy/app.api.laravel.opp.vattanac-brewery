@@ -28,7 +28,6 @@ class ProductReview extends Model
             if ($product_id) {
                 $builder->where('product_id', $product_id);
             }
-            $builder->active();
         });
         // create a event to happen on updating
         static::updating(function ($table) {
