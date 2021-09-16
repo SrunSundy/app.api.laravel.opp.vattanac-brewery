@@ -23,12 +23,12 @@ class ProductReview extends Model
     public static function boot()
     {
         parent::boot();
-        static::addGlobalScope('product_based', function (Builder $builder) {
-            $product_id = request()->route('product');
-            if ($product_id) {
-                $builder->where('product_id', $product_id);
-            }
-        });
+        // static::addGlobalScope('product_based', function (Builder $builder) {
+        //     $product_id = request()->route('product');
+        //     if ($product_id) {
+        //         $builder->where('product_id', $product_id);
+        //     }
+        // });
         // create a event to happen on updating
         static::updating(function ($table) {
             $table->updated_at = get_current_datetime() ?? null;
