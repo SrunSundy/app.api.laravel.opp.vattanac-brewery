@@ -43,7 +43,6 @@ class Product extends Model
     */
     public function getIsWishlistAttribute()
     {
-        return $this->my_wishlist();
         return $this->my_wishlist()->count() || false;
     }
 
@@ -59,7 +58,7 @@ class Product extends Model
 
     public function getAvgReviewAttribute()
     {
-        return $this->productReviews();
+        return $this->productReviews()->count();
         if($this->productReviews()->count() <= 0){
             return 0;
         }
