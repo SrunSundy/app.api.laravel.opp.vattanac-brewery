@@ -52,7 +52,7 @@ class ProductReview extends Model
     */
 
     public function outlet(){
-        $this->belongsTo(Outlet::class , "outlet_id");
+        return $this->belongsTo(Outlet::class , "outlet_id");
     }
 
      /*
@@ -62,11 +62,11 @@ class ProductReview extends Model
     */
 
     public function getOutletNameAttribute(){
-        $this->outlet->owner_name;
+        return $this->outlet->owner_name;
     }
 
     public function getOutletImageAttribute(){
-        $this->outlet->image;
+        return $this->outlet->image;
     }
 
     /*
