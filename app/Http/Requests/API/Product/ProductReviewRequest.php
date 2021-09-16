@@ -24,7 +24,6 @@ class ProductReviewRequest extends FormRequest
     public function rules()
     {
         return [
-            'outlet_id' => 'required',
             'product_id' => 'required',
             'rating' => 'required|integer|min:0|max:5',
             'title' => 'required|max:255',

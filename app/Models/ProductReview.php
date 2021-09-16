@@ -94,6 +94,7 @@ class ProductReview extends Model
 
     public static function store($request , $id = null)
     {
+        $request["outlet_id"] =  auth()->user()->id;
         $fields = [
             'outlet_id',
             'product_id',
