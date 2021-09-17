@@ -33,7 +33,6 @@ class ProductReview extends Model
         static::updating(function ($table) {
             $table->updated_at = get_current_datetime() ?? null;
         });
-
         // create a event to happen on saving
         static::creating(function ($table) {
             $table->created_at = get_current_datetime() ?? null;
@@ -84,6 +83,9 @@ class ProductReview extends Model
 
     public static function avgReview()
     {
+        if(self::count() <= 0){
+            return 0;
+        } 
         $avg = self::sum('rating') / self::count();
         return $avg;
     }

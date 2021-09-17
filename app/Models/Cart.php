@@ -33,11 +33,14 @@ class Cart extends Model
         $query->where("outlet_id", auth()->user()->id);
     }
 
+
+    
     /*
     |------------------------------------------------------------ 
     | STATIC METHODS
     |------------------------------------------------------------
     */
+
 
     public static function list($params)
     {
@@ -48,6 +51,18 @@ class Cart extends Model
             $list = CartProduct::list($params);
         }
         return $list;
+    }
+
+
+    public static function productCnt($params){
+        $cart = self::filter($params)->first();
+        $cnt = 0;
+        if($cart){
+            $params["cart_id"] = $cart->id;
+            $cnt = CartProduct::cnt($params);
+        }
+        return $cnt;
+
     }
 
     public static function store($request)

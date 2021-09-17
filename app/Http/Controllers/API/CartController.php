@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Cart\CartRequest;
+use App\Http\Resources\API\Cart\ListCartResource;
 use App\Models\Cart;
+use App\Models\CartProduct;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,9 +24,28 @@ class CartController extends Controller
         try {
             $this->getParams();
             $list = Cart::list($this->params);
-            //$list['list'] = ListAdvertisementResource::collection($list['list']);
+            $list['list'] = ListCartResource::collection($list['list']);
+            $subTotal = 0;
+            foreach($list['list'] as $item){
+                if( filled($item["unit_price"])){
+                    $subTotal += ($item["unit_price"] * $item["quantity"] );
+                }
+            }
+            $list["sub_total"] = $subTotal;
             
             return $this->ok($list);
+        } catch (Exception $e) {
+            return $this->fail($e->getMessage(), 500);
+        }
+    }
+
+
+    public function cartCount(){
+       
+        try {
+            $this->getParams();
+            $item["cnt"] = Cart::productCnt($this->params);
+            return $this->ok($item);
         } catch (Exception $e) {
             return $this->fail($e->getMessage(), 500);
         }
@@ -53,7 +74,9 @@ class CartController extends Controller
             DB::beginTransaction();
             Cart::store($request);
             DB::commit();
-            return $this->ok(__('auth.success'));
+            $item["cnt"] = Cart::productCnt($request);
+            
+            return $this->ok($item);
         }catch(Exception $e){
             report($e);
             DB::rollBack();

@@ -25,7 +25,7 @@ class ProductReviewRequest extends FormRequest
     {
         return [
             'product_id' => 'required',
-            'rating' => 'required|integer|min:0|max:5',
+            'rating' => 'required|numeric|min:0|max:5',
             'title' => 'required|max:255',
         ];
     }

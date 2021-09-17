@@ -18,6 +18,37 @@ class CartProduct extends Model
 
      /*
     |------------------------------------------------------------ 
+    | RELATIONS
+    |------------------------------------------------------------
+    */
+    public function product(){
+        return $this->belongsTo(Product::class, "product_variant_id");
+    }
+
+     /*
+    |------------------------------------------------------------ 
+    | ACCESSORS
+    |------------------------------------------------------------
+    */
+    public function getProductNameAttribute(){
+        return $this->product->name ?? '';
+    }
+
+    public function getImageUrlAttribute(){
+        return $this->product->image_url ?? '';
+    }
+
+    public function getProductIdAttribute(){
+        return $this->product_variant_id ?? '';
+    }
+
+    public function getUnitPriceAttribute(){
+        return $this->product->unit_price ?? '0';
+    }
+
+
+     /*
+    |------------------------------------------------------------ 
     | SCOPES
     |------------------------------------------------------------
     */
@@ -31,6 +62,11 @@ class CartProduct extends Model
     | STATIC FUNCTIONS
     |--------------------------------------------------------------------------
     */
+
+    public static function cnt($params){
+        return self::filter($params)->count();
+    }
+
     public static function list($params)
     {
         $list = self::filter($params);
