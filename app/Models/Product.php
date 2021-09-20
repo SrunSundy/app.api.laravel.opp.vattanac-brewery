@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Traits\ModelHelperTrait;
+use App\Scopes\ActiveScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,8 +16,9 @@ class Product extends Model
     {
         parent::boot();
 
+        static::addGlobalScope(new ActiveScope);
         static::addGlobalScope('active_brand', function(Builder $builder){
-            $builder->has('brand')->active();
+            $builder->has('brand');
         });
     }
     /*
@@ -122,7 +124,7 @@ class Product extends Model
     
     public static function list($params){
 
-        $list = self::filter($params)->active();
+        $list = self::filter($params);
         return listLimit($list, $params);
     }
 
