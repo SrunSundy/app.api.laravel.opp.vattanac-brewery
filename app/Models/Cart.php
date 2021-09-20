@@ -81,4 +81,13 @@ class Cart extends Model
         }
         return $data;
     }
+
+    public static function remove($params)
+    {
+        $cart = self::filter($params)->first();
+        if($cart){
+            CartProduct::remove( $cart->id ,request()->get("product_id"));
+        }
+        
+    }
 }

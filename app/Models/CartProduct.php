@@ -77,7 +77,7 @@ class CartProduct extends Model
     {
         $cart_product = self::where([
             'cart_id' => $cart_id,
-            'product_variant_id' => $request->product_variant_id,
+            'product_variant_id' => $request->product_id,
         ])->first();
 
         if ($cart_product) {
@@ -87,7 +87,26 @@ class CartProduct extends Model
         } else {
             $cart_product = self::create($request->only('product_variant_id', 'quantity') + ['cart_id' => $cart_id]);
         }
+        return $cart_product;
+    }
 
+    public static function remove( $cartId ,$productId)
+    {
+        $cart_product = self::where([
+            'cart_id' => $cartId,
+            'product_variant_id' => $productId,
+        ])->first();
+
+        if($cart_product->quantity > 1){
+            $cart_product->update([
+                'quantity' => $cart_product->quantity - request()->get("quantity"),
+            ]);
+        }else{
+            $cart_product->delete();
+        }
+
+       
+     
         return $cart_product;
     }
 }

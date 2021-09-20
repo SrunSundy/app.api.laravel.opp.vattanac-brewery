@@ -16,6 +16,18 @@ class CartRequest extends FormRequest
         return true;
     }
 
+     /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        request()->merge([
+            'product_variant_id' =>$this->product_id,
+        ]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Traits\ModelHelperTrait;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +11,14 @@ class Product extends Model
 {
     use HasFactory, ModelHelperTrait;
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('active_brand', function(Builder $builder){
+            $builder->has('brand')->active();
+        });
+    }
     /*
     |------------------------------------------------------------ 
     | SCOPES
