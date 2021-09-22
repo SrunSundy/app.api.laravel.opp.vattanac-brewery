@@ -9,6 +9,68 @@ class Cart extends Model
 {
     use HasFactory;
     protected $fillable = ['outlet_id', 'promotion_id', 'is_urgent','created_by'];
+
+    /*
+    |------------------------------------------------------------ 
+    | ACCESSORS
+    |------------------------------------------------------------
+    */
+    public function getOutletNameAttribute()
+    {
+        return $this->outlet->outlet_name ?? '';
+    }
+
+    public function getOutletAddressAttribute()
+    {
+        return ($this->outlet->house_no.',' ?? '') .
+        ($this->outlet->street_no.',' ?? '').
+        ($this->outlet->province.',' ?? '').
+        ($this->outlet->district.',' ?? '').
+        ($this->outlet->commune.',' ?? '').
+        ($this->outlet->village.',' ?? '');
+    }
+
+    public function getOutletPhoneNumberAttribute()
+    {
+        return $this->outlet->contact_number ?? '';
+    }
+
+    public function getOutletLatAttribute()
+    {
+        return $this->outlet->latitude ?? '';
+    }
+
+    public function getOutletLngAttribute()
+    {
+        return $this->outlet->longitude ?? '';
+    }
+
+    public function getAgentNameAttribute(){
+        return $this->outlet->saleUser->fullname ?? '';
+    }
+
+    public function getAgentCodeAttribute(){
+        return $this->outlet->saleUser->agent_number ?? '';
+    }
+
+    public function getAgentPhoneNumberAttribute(){
+        return $this->outlet->saleUser->phone ?? '';
+    }
+
+    public function getAgentIdAttribute(){
+        return $this->outlet->sale_user_id ?? '';
+    }
+
+    /*
+    |------------------------------------------------------------ 
+    | RELATIONS
+    |------------------------------------------------------------
+    */
+    public function outlet()
+    {
+        return $this->belongsTo(Outlet::class, 'outlet_id');
+    }
+
     /*
     |------------------------------------------------------------ 
     | SCOPES
@@ -40,6 +102,10 @@ class Cart extends Model
     | STATIC METHODS
     |------------------------------------------------------------
     */
+
+    public static function detail($params){
+        return self::filter($params)->first();
+    }
 
 
     public static function list($params)
@@ -80,6 +146,13 @@ class Cart extends Model
             CartProduct::store($request, $data->id);
         }
         return $data;
+    }
+
+    public static function removeAll($params){
+        $cart = self::filter($params)->first();
+        if($cart){
+            CartProduct::removeAll($cart->id);
+        }
     }
 
     public static function remove($params)

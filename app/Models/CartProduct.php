@@ -104,9 +104,12 @@ class CartProduct extends Model
         }else{
             $cart_product->delete();
         }
-
-       
      
         return $cart_product;
+    }
+
+    public static function removeAll($cartId){
+
+        self::where("cart_id" , $cartId)->delete();
     }
 }

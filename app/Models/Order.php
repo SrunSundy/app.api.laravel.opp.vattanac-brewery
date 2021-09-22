@@ -81,7 +81,7 @@ class Order extends Model
         if (request()->has("state_code")) {
             $query->where("order_states.order_state_code", request()->get("state_code"));
         }
-        $outlet_id = $params["outlet_id"] ?? request()->get('outlet_id');
+        $outlet_id = auth()->user()->id ?? request()->get('outlet_id');
         $query->where("outlet_id", $outlet_id);
         return $query;
     }
@@ -181,7 +181,7 @@ class Order extends Model
 
                 array_push($products , [
                     'order_id' => $order->id,
-                    'product_variant_id' => $product["product_variant_id"],
+                    'product_variant_id' => $product["product_id"],
                     'quantity' => $product["quantity"],
                     'unit_price' => $product["unit_price"],
                     'sub_total' => $product_sub_total,

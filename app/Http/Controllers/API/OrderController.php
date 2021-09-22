@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Order\OrderRequest;
 use App\Http\Resources\API\Order\DetailOrderResource;
 use App\Http\Resources\API\Order\ListOrderResource;
+use App\Models\Cart;
 use App\Models\Order;
 use Exception;
 use Illuminate\Http\Request;
@@ -46,6 +47,7 @@ class OrderController extends Controller
             DB::beginTransaction();
             Order::store($request);
             DB::commit();
+            Cart::removeAll($request);            
             return $this->ok(__('auth.success'));
             
         }catch(Exception $e)

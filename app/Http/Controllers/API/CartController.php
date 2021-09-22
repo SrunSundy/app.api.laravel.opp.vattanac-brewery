@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Cart\CartRequest;
+use App\Http\Resources\API\Cart\DetailCartResource;
 use App\Http\Resources\API\Cart\ListCartResource;
 use App\Models\Cart;
 use App\Models\CartProduct;
@@ -23,8 +24,10 @@ class CartController extends Controller
         //
         try {
             $this->getParams();
-            $list = Cart::list($this->params);
-            $list['list'] = ListCartResource::collection($list['list']);
+            $item = Cart::detail($this->params);
+            $data = Cart::list($this->params);
+            $list = new DetailCartResource($item);
+            $list['list'] = ListCartResource::collection($data['list']);
             $subTotal = 0;
             foreach($list['list'] as $item){
                 if( filled($item["unit_price"])){
