@@ -137,7 +137,6 @@ class Cart extends Model
             'promotion_id',
             'is_urgent'
         ];
-
         $value = mapRequest($fields, $request);
         $data = self::updateOrCreate(['outlet_id' => auth()->user()->id], $value);
         
@@ -147,6 +146,24 @@ class Cart extends Model
         }
         return $data;
     }
+
+    public static function reorder($request)
+    {
+        $fields = [
+            'promotion_id',
+            'is_urgent'
+        ];
+        $value = mapRequest($fields, $request);
+        $data = self::updateOrCreate(['outlet_id' => auth()->user()->id], $value);
+        
+        if($data){
+            CartProduct::removeAll($data->id);
+            //add outlet products to cart
+            CartProduct::stores($request, $data->id);
+        }
+        return $data;
+    }
+
 
     public static function removeAll($params){
         $cart = self::filter($params)->first();

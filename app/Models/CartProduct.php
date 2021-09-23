@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use phpDocumentor\Reflection\Types\Self_;
 
 class CartProduct extends Model
 {
@@ -88,6 +89,32 @@ class CartProduct extends Model
             $cart_product = self::create($request->only('product_variant_id', 'quantity') + ['cart_id' => $cart_id]);
         }
         return $cart_product;
+    }
+
+    public static function stores($request, $cart_id){
+        $items = $request["products"];
+        $products = [];
+        foreach($items as $item){
+
+            $cart_product = self::where([
+                'cart_id' => $cart_id,
+                'product_variant_id' => $item["product_variant_id"],
+            ])->first();
+               
+            if ($cart_product) {
+                $cart_product->update([
+                    'quantity' => $cart_product->quantity + $item["quantity"],
+                ]);
+            } else {
+                array_push($products , [
+                    'product_variant_id' => $item["product_variant_id"],
+                    'quantity' => $item["quantity"],
+                    'cart_id' => $cart_id
+                ]);
+            }
+            
+        }
+        self::insert($products);
     }
 
     public static function remove( $cartId ,$productId)

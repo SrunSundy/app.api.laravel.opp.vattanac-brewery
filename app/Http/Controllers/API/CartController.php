@@ -88,6 +88,23 @@ class CartController extends Controller
     }
 
 
+    public function reorder(CartRequest $request)
+    {
+        try{
+            DB::beginTransaction();
+            Cart::reorder($request);
+            DB::commit();
+            $item["cnt"] = Cart::productCnt($request);
+            
+            return $this->ok($item);
+        }catch(Exception $e){
+            report($e);
+            DB::rollBack();
+            return $this->fail($e->getMessage(), 500);
+        }
+    }
+
+
     public function remove(CartRequest $request){
         try{
             DB::beginTransaction();

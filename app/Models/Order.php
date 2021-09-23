@@ -39,6 +39,16 @@ class Order extends Model
         return $this->agent->fullname ?? '';
     }
 
+    public function getAgentIdAttribute()
+    {
+        return $this->agent->id ?? '';
+    }
+
+    public function getAgentCodeAttribute()
+    {
+        return $this->agent->agent_number ?? '';
+    }
+
     public function getOutletNameAttribute()
     {
         return $this->outlet->outlet_name ?? '';
@@ -77,12 +87,12 @@ class Order extends Model
 
     public function scopeFilter($query, $params)
     {
-
         if (request()->has("state_code")) {
-            $query->where("order_states.order_state_code", request()->get("state_code"));
+            $query->where("state_id", request()->get("state_code"));
         }
         $outlet_id = auth()->user()->id ?? request()->get('outlet_id');
-        $query->where("outlet_id", $outlet_id);
+        $query->where("outlet_id", $outlet_id)
+            ->where("order_number", "like", "%".$params["search"]."%");
         return $query;
     }
 
@@ -124,9 +134,7 @@ class Order extends Model
     public static function list($params)
     {
 
-        $list = self::leftJoin('order_states', function ($join) {
-            $join->on('order_states.id', '=', 'orders.state_id');
-        })->filter($params);
+        $list = self::filter($params);
         return listLimit($list, $params);
     }
 
@@ -154,7 +162,7 @@ class Order extends Model
 
     public static function store($request)
     {
-        $request["state_id"] = OrderState::getValueByKey("202");
+        $request["state_id"] = 202;
         $request["outlet_id"] = auth()->user()->id;
         $fields = [
             'outlet_id',

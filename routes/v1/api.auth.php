@@ -39,6 +39,7 @@ Route::group(['prefix' => 'me'], function(){
     Route::get('/cart', [CartController::class , 'index']);
     Route::get('/cart/count', [CartController::class , 'cartCount']);
     Route::post('/cart/store', [CartController::class , 'store']);
+    Route::post('/cart/reorder', [CartController::class , 'reorder']);
     Route::post('/cart/remove', [CartController::class , 'remove']);
 });
 

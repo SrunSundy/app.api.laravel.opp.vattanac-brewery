@@ -17,8 +17,8 @@ class DetailOrderResource extends JsonResource
         return $this->only('id', 'order_number', 'is_urgent',
         'outlet_id','outlet_name', 'sub_total',
         'percent_off', 'amount_off', 'total',
-        'sale_user_id','sale_user_name','promotion_id',
-        'order_state_code', 'state_label'
+        'agent_id','agent_name','agent_code','promotion_id',
+        'order_state_code', 'state_label','created_at'
         )+ [
              'products' => ListOrderProductResource::collection($this->products)
         ];
