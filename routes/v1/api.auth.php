@@ -36,17 +36,20 @@ Route::group(['prefix' => 'me'], function(){
     Route::get('/wishlist', [OutletController::class , 'wishlist']);
     Route::post('/wishlist/store', [OutletController::class , 'storeWishlist']);
     Route::post('/wishlist/remove', [OutletController::class , 'removeWishlist']);
+    Route::get('/agent',[OutletController::class, 'agent']);
     Route::get('/cart', [CartController::class , 'index']);
     Route::get('/cart/count', [CartController::class , 'cartCount']);
     Route::post('/cart/store', [CartController::class , 'store']);
     Route::post('/cart/reorder', [CartController::class , 'reorder']);
     Route::post('/cart/remove', [CartController::class , 'remove']);
+    
 });
 
 Route::group(['prefix' => 'order'], function(){
     Route::get('/', [OrderController::class, 'index']);
     Route::get('/{order}', [OrderController::class, 'show']);
     Route::post('/store', [OrderController::class , 'store']);
+    Route::post('/cancel', [OrderController::class , 'cancel']);
 });
 
 Route::group(['prefix' => 'outlet'], function(){

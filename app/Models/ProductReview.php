@@ -24,10 +24,14 @@ class ProductReview extends Model
     {
         parent::boot();
         static::addGlobalScope('product_based', function (Builder $builder) {
-            $product_id = request()->route('product');
-            if ($product_id) {
-                $builder->where('product_id', $product_id);
+
+            if(is_numeric(request()->route('product'))){
+                $product_id = request()->route('product');
+                if ($product_id) {
+                    $builder->where('product_id', $product_id);
+                }
             }
+            
         });
         // create a event to happen on updating
         static::updating(function ($table) {

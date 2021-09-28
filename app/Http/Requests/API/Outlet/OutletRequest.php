@@ -38,8 +38,7 @@ class OutletRequest extends FormRequest
         return [
             "owner_name" => "required|max:100",
             "outlet_name" => "required|max:150", 
-            "phone_number" => "required|max:50|phone:kh",
-            "password" => "required|confirmed"
+            "phone_number" => "required|max:50|phone:kh"
             //
         ];
     }

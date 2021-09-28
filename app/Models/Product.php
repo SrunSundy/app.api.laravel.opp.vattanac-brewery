@@ -74,7 +74,6 @@ class Product extends Model
 
     public function getAvgReviewAttribute()
     {
-        return $this->productReviews()->count();
         if($this->productReviews()->count() <= 0){
             return 0;
         }

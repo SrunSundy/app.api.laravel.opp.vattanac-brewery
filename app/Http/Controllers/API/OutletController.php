@@ -8,9 +8,12 @@ use App\Http\Requests\API\Outlet\FeedbackRequest;
 use App\Http\Requests\API\Outlet\OutletRequest;
 use App\Http\Requests\API\Outlet\OutletWishlistRequest;
 use App\Http\Resources\API\Outlet\OutletWishlistResource;
+use App\Http\Resources\API\SaleUser\DetailSaleUSerResource;
 use App\Models\Feedback;
 use App\Models\Outlet;
 use App\Models\OutletWishlist;
+use App\Models\RequestOutlet;
+use App\Models\SaleUser;
 use App\Models\SaleUserFeedback;
 use Exception;
 use Illuminate\Http\Request;
@@ -27,6 +30,21 @@ class OutletController extends Controller
     public function index()
     {
         //
+    }
+
+
+    public function agent(){
+        
+        try{
+            $item = SaleUser::detail();
+            if(!filled($item)){
+                return $this->fail(__('auth.record_not_found'), 404);
+            }
+            $item = new DetailSaleUSerResource($item);
+            return $this->ok($item);
+        }catch(Exception $e){
+            return $this->fail($e->getMessage(), 500);
+        }
     }
 
     /**
@@ -123,17 +141,18 @@ class OutletController extends Controller
         try{
              
             DB::beginTransaction();
-            if(Outlet::isPhoneNumberExisted($request)){
+            if(RequestOutlet::isPhoneNumberExisted($request)){
                 DB::rollBack();
                 return $this->fail("Phone number already exists", 403);
             }
-            Outlet::store($request);
+            $data = RequestOutlet::store($request);
             DB::commit();
-            $token = Auth::attempt([
-                'contact_number' => $request->phone_number,
-                'password' => $request->password,
-            ]);
-            return $this->ok($this->respondWithToken($token));
+            return $this->ok($data);
+            // $token = Auth::attempt([
+            //     'contact_number' => $request->phone_number,
+            //     'password' => $request->password,
+            // ]);
+            // return $this->ok($this->respondWithToken($token));
         }catch(Exception $e){
             report($e);
             DB::rollBack();

@@ -18,7 +18,8 @@ class ProfileResource extends JsonResource
         return $this->only('outlet_name_en','outlet_name_kh', 'owner_name', 'contact_number',
             'region_code','sale_user_id','sale_user_name',
             'agent_code', 'house_no', 'street_no',
-            'village', 'commune', 'district', 
+            'village', 'commune', 'district', 'image',
+            'name_kh', 'outlet_name',
             'province', 'latitude', 'longitude');
     }
 }

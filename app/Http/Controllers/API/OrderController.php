@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\Order\CancelORderRequest;
 use App\Http\Requests\API\Order\OrderRequest;
 use App\Http\Resources\API\Order\DetailOrderResource;
 use App\Http\Resources\API\Order\ListOrderResource;
@@ -73,6 +74,19 @@ class OrderController extends Controller
             
             return $this->ok($item);
         } catch (Exception $e) {
+            return $this->fail($e->getMessage(), 500);
+        }
+    }
+
+
+    /**cancel user's order */
+    public function cancel(CancelORderRequest $request)
+    {
+        try{
+            $params["state_id"] = "499";
+            $status = Order::updateStatusById($params);
+            return $this->ok($status);
+        }catch (Exception $e){
             return $this->fail($e->getMessage(), 500);
         }
     }

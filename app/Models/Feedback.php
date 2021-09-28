@@ -46,7 +46,6 @@ class Feedback extends Model
         $request["outlet_id"] = auth()->user()->id;
         $fields = [
             'outlet_id',
-            'type',
             'description',
         ];
 
