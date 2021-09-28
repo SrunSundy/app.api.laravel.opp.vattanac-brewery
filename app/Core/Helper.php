@@ -9,6 +9,15 @@ function get_current_datetime()
     return $now;
 }
 
+function substruct_two_datetime($date1, $date2)
+{
+    $datetime1 = strtotime($date1);
+    $datetime2 = strtotime($date2);
+    $secs = $datetime2 - $datetime1;
+    $hours = $secs / 3600;
+    return $hours;
+}
+
 /**
  * Sort list of data
  *

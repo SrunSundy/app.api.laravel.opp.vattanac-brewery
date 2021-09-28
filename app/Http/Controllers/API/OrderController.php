@@ -9,6 +9,7 @@ use App\Http\Resources\API\Order\DetailOrderResource;
 use App\Http\Resources\API\Order\ListOrderResource;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Setting;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -71,7 +72,6 @@ class OrderController extends Controller
         //
         try {
             $item = new DetailOrderResource($order);
-            
             return $this->ok($item);
         } catch (Exception $e) {
             return $this->fail($e->getMessage(), 500);
@@ -83,10 +83,28 @@ class OrderController extends Controller
     public function cancel(CancelORderRequest $request)
     {
         try{
-            $params["state_id"] = "499";
-            $status = Order::updateStatusById($params);
-            return $this->ok($status);
+             
+            $order = Order::show();
+            if($order){
+                DB::beginTransaction();
+                $durationToCancel = (int)Setting::getValueByKey("order.api.cancel_duration");
+                $currentDate = get_current_datetime();
+                $currentDuration =  substruct_two_datetime($order->created_at ,$currentDate);
+    
+                if($durationToCancel > $currentDuration){
+                    $params["state_id"] = "499";
+                    $status = Order::updateStatusById($params);
+                    DB::commit();
+                    return $this->ok($status);
+                }else{
+                    DB::rollBack();
+                    return $this->fail("You can not cancel this order.");
+                }
+            }else{
+                return $this->fail("Record not found", 404);
+            }
         }catch (Exception $e){
+            report($e);
             return $this->fail($e->getMessage(), 500);
         }
     }

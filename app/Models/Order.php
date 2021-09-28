@@ -163,6 +163,12 @@ class Order extends Model
             ]);
     }
 
+    public static function show(){
+        return self::where('id', request()->get("order_id"))
+            ->where('outlet_id', auth()->user()->id)
+            ->first();
+    }
+
     public static function isOrderExisted($params)
     {
         $count = self::where("order_number", $params["order_number"])->count();
