@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Core\DateLib;
 use App\Http\Traits\OrderHelperTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,6 +25,7 @@ class Order extends Model
         'created_at',
         'updated_at',
     ];
+
     /*
     |------------------------------------------------------------ 
     | ACCESSORS
@@ -59,8 +61,8 @@ class Order extends Model
         return $this->orderState->state_label ?? '';
     }
 
-    public function getTestAttribute(){
-        return $this->created_at ?? '';
+    public function getCreatedAtAttribute(){
+        return DateLib::formatDateTime($this->created_at ?? '');
     }
 
 
