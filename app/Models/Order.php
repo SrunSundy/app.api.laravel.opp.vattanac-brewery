@@ -59,6 +59,10 @@ class Order extends Model
         return $this->orderState->state_label ?? '';
     }
 
+    public function getTestAttribute(){
+        return $this->created_at ?? '';
+    }
+
 
     /*
     |------------------------------------------------------------ 

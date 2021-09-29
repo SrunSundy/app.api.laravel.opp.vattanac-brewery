@@ -123,14 +123,19 @@ class CartProduct extends Model
             'cart_id' => $cartId,
             'product_variant_id' => $productId,
         ])->first();
-
-        if($cart_product->quantity > 1){
-            $cart_product->update([
-                'quantity' => $cart_product->quantity - request()->get("quantity"),
-            ]);
-        }else{
+        
+        if(request()->get("quantity") == 0){
             $cart_product->delete();
+        }else{
+            if($cart_product->quantity > 1){
+                $cart_product->update([
+                    'quantity' => $cart_product->quantity - request()->get("quantity"),
+                ]);
+            }else{
+                $cart_product->delete();
+            }
         }
+        
      
         return $cart_product;
     }

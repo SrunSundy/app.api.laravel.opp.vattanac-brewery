@@ -119,6 +119,21 @@ class CartController extends Controller
         }
     }
 
+    public function removeAll(CartRequest $request){
+
+        try{
+            DB::beginTransaction();
+            Cart::removeAll($request);
+            DB::commit();
+            $item["cnt"] = Cart::productCnt($request);
+            return $this->ok($item);
+        }catch(Exception $e){
+            report($e);
+            DB::rollBack();
+            return $this->fail($e->getMessage(), 500);
+        }
+    }
+
     /**
      * Display the specified resource.
      *

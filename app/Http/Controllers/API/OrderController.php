@@ -27,9 +27,7 @@ class OrderController extends Controller
         try {
             $this->getParams();
             $list = Order::list($this->params);
-            //dd($list);
             $list['list'] = ListOrderResource::collection($list['list']);
-            
             return $this->ok($list);
         } catch (Exception $e) {
             return $this->fail($e->getMessage(), 500);
