@@ -61,9 +61,9 @@ class Order extends Model
         return $this->orderState->state_label ?? '';
     }
 
-    public function getCreatedAtAttribute(){
-        return DateLib::formatDateTime($this->created_at ?? '');
-    }
+    // public function getCreatedAtAttribute(){
+    //     return DateLib::formatDateTime($this->created_at ?? '');
+    // }
 
 
     /*
