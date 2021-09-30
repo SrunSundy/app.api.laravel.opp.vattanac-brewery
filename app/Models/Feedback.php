@@ -47,6 +47,7 @@ class Feedback extends Model
         $fields = [
             'outlet_id',
             'description',
+            'type'
         ];
 
         $value = mapRequest($fields, $request);
