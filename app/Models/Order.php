@@ -61,9 +61,9 @@ class Order extends Model
         return $this->orderState->state_label ?? '';
     }
 
-    // public function getCreatedAtAttribute(){
-    //     return DateLib::formatDateTime($this->created_at ?? '');
-    // }
+    public function getCreatedAtAttribute(){
+        return DateLib::formatDateTime($this->created_at ?? '');
+    }
 
 
     /*
@@ -82,6 +82,7 @@ class Order extends Model
         // create a event to happen on saving
         static::creating(function ($table) {
             $table->created_at = get_current_datetime() ?? null;
+            $table->timestamp = false;
         });
 
         // create a event to happen on saving
