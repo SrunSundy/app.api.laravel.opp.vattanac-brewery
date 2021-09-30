@@ -82,7 +82,7 @@ class Order extends Model
         // create a event to happen on saving
         static::creating(function ($table) {
             $table->created_at = get_current_datetime() ?? null;
-            $table->timestamp = false;
+            $table->timestamps = false;
         });
 
         // create a event to happen on saving
