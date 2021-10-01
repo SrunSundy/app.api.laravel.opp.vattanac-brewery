@@ -95,6 +95,10 @@ class DateLib
 
     public static function formatDateTime($date, $format = 'Y-m-d H:i:s')
     {
+        if (!$date) {
+            return '';
+        }
+        
         return Carbon::parse($date)
             ->timezone(config('app.timezone'))
             ->format($format);
