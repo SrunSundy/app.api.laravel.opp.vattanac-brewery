@@ -69,7 +69,9 @@ class OrderController extends Controller
     {
         //
         try {
+            $order = Order::show();
             $item = new DetailOrderResource($order);
+
             return $this->ok($item);
         } catch (Exception $e) {
             return $this->fail($e->getMessage(), 500);

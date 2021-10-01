@@ -41,12 +41,17 @@ class Order extends Model
 
     public function getAgentNameAttribute()
     {
-        return $this->agent->fullname ?? '';
+        return $this->agent->name ?? '';
     }
 
-    public function getAgentIdAttribute()
+    public function getAgentIdAttribute($value)
     {
-        return $this->agent->id ?? '';
+        return $value ?? '';
+    }
+
+    public function getAgentPhoneAttribute()
+    {
+        return $this->agent->contact_number ?? '';
     }
 
     public function getAgentCodeAttribute()
@@ -118,7 +123,7 @@ class Order extends Model
 
     public function agent()
     {
-        return $this->belongsTo(SaleUser::class, 'sale_user_id');
+        return $this->belongsTo(Agent::class, 'agent_id');
     }
 
     public function outlet()
@@ -174,9 +179,10 @@ class Order extends Model
     }
 
     public static function show(){
-        return self::where('id', request()->get("order_id"))
-            ->where('outlet_id', auth()->user()->id)
-            ->first();
+        return request()->route('order');
+        // return self::where('id', request()->route('order'))
+        //     ->where('outlet_id', auth()->user()->id)
+        //     ->first();
     }
 
     public static function isOrderExisted($params)
