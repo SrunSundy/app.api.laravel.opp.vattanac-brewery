@@ -90,7 +90,7 @@ class Handler extends ExceptionHandler
             //return responseFail($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         // return $this->fail("Server Error" , Response::HTTP_INTERNAL_SERVER_ERROR);
-        return $this->fail($exception->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        //return $this->fail($exception->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
 
         //return parent::render($request, $exception);
     }
