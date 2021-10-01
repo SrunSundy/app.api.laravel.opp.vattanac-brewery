@@ -13,9 +13,9 @@ class OutletRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        request()->merge([
-            'contact_number' => phone($this->phone_number, 'kh'),
-        ]);
+        // request()->merge([
+        //     'contact_number' => phone($this->phone_number, 'kh'),
+        // ]);
     }
     
     /**

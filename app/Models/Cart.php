@@ -46,19 +46,19 @@ class Cart extends Model
     }
 
     public function getAgentNameAttribute(){
-        return $this->outlet->saleUser->fullname ?? '';
+        return $this->outlet->agent->name ?? '';
     }
 
     public function getAgentCodeAttribute(){
-        return $this->outlet->saleUser->agent_number ?? '';
+        return $this->outlet->agent->agent_number ?? '';
     }
 
     public function getAgentPhoneNumberAttribute(){
-        return $this->outlet->saleUser->phone ?? '';
+        return $this->outlet->agent->contact_number ?? '';
     }
 
     public function getAgentIdAttribute(){
-        return $this->outlet->sale_user_id ?? '';
+        return $this->outlet->agent_id ?? '';
     }
 
     /*

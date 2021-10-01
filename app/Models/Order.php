@@ -22,6 +22,8 @@ class Order extends Model
         'amount_off',
         'total',
         'is_urgent',
+        'note',
+        'secondary_phone',
         'created_at',
         'updated_at',
     ];
@@ -186,6 +188,9 @@ class Order extends Model
     {
         $request["state_id"] = 202;
         $request["outlet_id"] = auth()->user()->id;
+        request()->merge([
+            'contact_number' => phone($request["phone_number"], 'kh'),
+        ]);
         $fields = [
             'outlet_id',
             'agent_id',
@@ -198,7 +203,10 @@ class Order extends Model
             'total',
             'is_urgent',
             'products',
+            'note',
+            'secondary_phone'
         ];
+
         $value = mapRequest($fields, $request);
         $order = self::create($value);
         if($order){

@@ -25,7 +25,7 @@ class OrderRequest extends FormRequest
     {
         return [
             //
-            "sale_user_id" => "required",
+            "agent_id" => "required",
             "sub_total" => "required|min:0",
             "total" => "required|min:0",
             "products" => "required",

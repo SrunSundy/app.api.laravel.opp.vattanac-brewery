@@ -85,6 +85,10 @@ class Outlet extends Authenticatable implements JWTSubject
         return $this->belongsTo(SaleUser::class, 'sale_user_id');
     }
 
+    public function agent(){
+        return $this->belongsTo(Agent::class, "agent_id");
+    }
+
      /*
     |------------------------------------------------------------ 
     | ACCESSORS
