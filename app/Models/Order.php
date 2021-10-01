@@ -187,7 +187,7 @@ class Order extends Model
         $request["outlet_id"] = auth()->user()->id;
         $fields = [
             'outlet_id',
-            'sale_user_id',
+            'agent_id',
             'promotion_id',
             'state_id',
             'order_number',
