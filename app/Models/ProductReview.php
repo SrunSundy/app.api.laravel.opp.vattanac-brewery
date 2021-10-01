@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Core\DateLib;
 use App\Http\Traits\ModelHelperTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -71,6 +72,11 @@ class ProductReview extends Model
     public function getOutletImageAttribute(){
         return $this->outlet->image ?? "";
     }
+
+    public function getCreatedAtAttribute($value){
+        return DateLib::formatDateTime($value ?? '');
+    }
+
 
 
     /*
