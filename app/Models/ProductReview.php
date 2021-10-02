@@ -85,11 +85,12 @@ class ProductReview extends Model
     |------------------------------------------------------------
     */
 
-    public static function isReviewed(){
-        $cnt = self::where("outlet_id", auth()->user()->id)
-                ->count();
-        return ($cnt >= 1);
+    public static function reviewedData(){
+        $data = self::where("outlet_id", auth()->user()->id)
+                ->first();
+        return $data;
     }
+
 
     public static function list($params)
     {
