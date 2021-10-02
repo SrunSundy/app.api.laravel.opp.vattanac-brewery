@@ -60,8 +60,9 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function userProfile()
-    {
-        return $this->ok(new ProfileResource(auth()->user()));
+    {   
+        $detail = $this->ok(new ProfileResource(auth()->user()));
+        return $detail;
     }
 
     /**
