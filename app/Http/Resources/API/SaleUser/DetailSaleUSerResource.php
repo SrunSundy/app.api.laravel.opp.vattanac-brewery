@@ -14,7 +14,7 @@ class DetailSaleUSerResource extends JsonResource
      */
     public function toArray($request)
     {
-        return $this->only('id', 'fullname','phone',
-            'agent_code', 'telegram_user_no');
+        return $this->only('id', 'name','contact_number',
+            'agent_number', 'telegram_user_no');
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Requests\API\Outlet\OutletRequest;
 use App\Http\Requests\API\Outlet\OutletWishlistRequest;
 use App\Http\Resources\API\Outlet\OutletWishlistResource;
 use App\Http\Resources\API\SaleUser\DetailSaleUSerResource;
+use App\Models\Agent;
 use App\Models\Feedback;
 use App\Models\Outlet;
 use App\Models\OutletWishlist;
@@ -36,7 +37,7 @@ class OutletController extends Controller
     public function agent(){
         
         try{
-            $item = SaleUser::detail();
+            $item = Agent::detail();
             if(!filled($item)){
                 return $this->fail(__('auth.record_not_found'), 404);
             }
