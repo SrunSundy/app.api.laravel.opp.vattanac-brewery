@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\UpdatePasscodeRequest;
-use App\Http\Resources\Api\Auth\ProfileResource;
+use App\Http\Resources\API\Auth\ProfileResource;
 use App\Models\Outlet;
 use Exception;
 use Illuminate\Support\Facades\Auth;
