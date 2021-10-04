@@ -50,7 +50,7 @@ Route::group(['prefix' => 'order'], function(){
     Route::get('/', [OrderController::class, 'index']);
     Route::get('/{order}', [OrderController::class, 'show']);
     Route::post('/store', [OrderController::class , 'store']);
-    Route::post('/cancel', [OrderController::class , 'cancel']);
+    Route::post('/cancel/{order}', [OrderController::class , 'cancel']);
 });
 
 Route::group(['prefix' => 'outlet'], function(){

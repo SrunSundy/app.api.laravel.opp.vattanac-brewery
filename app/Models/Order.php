@@ -185,6 +185,12 @@ class Order extends Model
         //     ->first();
     }
 
+    public static function showToCancel(){
+        return self::where('id', request()->route('order'))
+            ->where('outlet_id', auth()->user()->id)
+            ->first();
+    }
+
     public static function isOrderExisted($params)
     {
         $count = self::where("order_number", $params["order_number"])->count();

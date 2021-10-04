@@ -84,13 +84,13 @@ class OrderController extends Controller
     {
         try{
              
-            $order = Order::show();
+            $order = Order::showToCancel();
             if($order){
                 DB::beginTransaction();
                 $durationToCancel = (int)Setting::getValueByKey("order.api.cancel_duration");
                 $currentDate = get_current_datetime();
                 $currentDuration =  substruct_two_datetime($order->created_at ,$currentDate);
-    
+              
                 if($durationToCancel > $currentDuration){
                     $params["state_id"] = "499";
                     $status = Order::updateStatusById($params);
