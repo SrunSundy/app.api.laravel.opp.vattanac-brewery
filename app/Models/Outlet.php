@@ -135,4 +135,10 @@ class Outlet extends Authenticatable implements JWTSubject
         
         return $data;
     }   
+
+
+    public static function getTableName()
+    {
+        return (new self())->getTable();
+    }
 }

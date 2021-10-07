@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CartController;
+use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\OutletController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\OrderController;
@@ -43,7 +44,7 @@ Route::group(['prefix' => 'me'], function(){
     Route::post('/cart/reorder', [CartController::class , 'reorder']);
     Route::post('/cart/remove', [CartController::class , 'remove']);
     Route::post('/cart/remove_all', [CartController::class , 'removeAll']);
-    
+    Route::get('/notifications', [NotificationController::class, 'index']);
 });
 
 Route::group(['prefix' => 'order'], function(){

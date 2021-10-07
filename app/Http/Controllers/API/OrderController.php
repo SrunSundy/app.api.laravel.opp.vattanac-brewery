@@ -43,14 +43,12 @@ class OrderController extends Controller
      */
     public function store(OrderRequest $request)
     {
-        //
         try{
             DB::beginTransaction();
             Order::store($request);
             DB::commit();
             Cart::removeAll($request);            
             return $this->ok(__('auth.success'));
-            
         }catch(Exception $e)
         {
             report($e);

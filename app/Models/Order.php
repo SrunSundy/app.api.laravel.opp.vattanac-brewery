@@ -95,7 +95,14 @@ class Order extends Model
 
         // create a event to happen on saving
         static::created(function ($model) {
-            $model->order_number = self::generateOrderCode($model->id);
+            
+            
+            $agent = Agent::where( "id",$model->agent_id)->first();
+            $prefix = "SO";
+            if($agent && filled($agent->agent_number)){
+                $prefix = $agent->agent_number ."-SO";
+            }
+            $model->order_number = self::generateOrderCode($model->id ,  $prefix);
             $model->save();
         });
     }
