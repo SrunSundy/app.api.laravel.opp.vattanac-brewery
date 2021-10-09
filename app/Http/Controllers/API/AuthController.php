@@ -26,8 +26,9 @@ class AuthController extends Controller
         ])) {
             return $this->fail(__('validation.incorrect', ['attribute' => __('validation.attributes.phone_number_or_password')]));
         }
-
-        return $this->ok($this->respondWithToken($token));
+        $data = $this->respondWithToken($token);
+        $data["user"] =  Auth::user();
+        return $this->ok($data);
     }
 
     /**
