@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\Notification\ListNotificationResource;
 use App\Models\Notification;
 use Exception;
 use Illuminate\Http\Request;
@@ -19,8 +20,9 @@ class NotificationController extends Controller
          //
         try {
             $this->getParams();
-            $list = Notification::restrictRecord();
-            //$list['list'] = ListOrderResource::collection($list['list']);
+            $list = Notification::list($this->params);
+
+            $list["list"] = ListNotificationResource::collection($list["list"]);
             return $this->ok($list);
         } catch (Exception $e) {
             return $this->fail($e->getMessage(), 500);

@@ -54,6 +54,7 @@ class Notification extends Model
             'user_type' => Outlet::getTableName(),
         ])->pluck('notification_id');
 
+
         return $query->where(function ($q) use ($my_notification_ids) {
             $q->whereIn('id', $my_notification_ids);
         });
@@ -111,4 +112,10 @@ class Notification extends Model
     | STATIC FUNCTIONS
     |--------------------------------------------------------------------------
     */
+
+    public static function list($params)
+    {
+        $list = self::restrictRecord();
+        return listLimit($list, $params);
+    }
 }
