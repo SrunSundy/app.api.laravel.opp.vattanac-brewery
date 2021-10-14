@@ -15,6 +15,6 @@ class ListNotificationResource extends JsonResource
     public function toArray($request)
     {
         return $this->only('id', 'notifiable_id', 'notifiable_type',
-            'message', 'data', 'is_public', 'is_read');
+            'message', 'data', 'is_public', 'is_read','created_at');
     }
 }

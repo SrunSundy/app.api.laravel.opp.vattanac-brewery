@@ -39,7 +39,6 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-
         return $this->ok(null, __('dialog.success', ['action' => __('dialog.action.logout')]));
     }
 

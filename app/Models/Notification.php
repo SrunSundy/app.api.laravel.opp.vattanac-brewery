@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Core\DateLib;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -99,6 +100,10 @@ class Notification extends Model
     {
         return NotificationRecipient::myNotification()
             ->where(['notification_id' => $this->id, 'is_read' => true])->count() || false;
+    }
+
+    public function getCreatedAtAttribute($value){
+        return DateLib::formatDateTime($value ?? '');
     }
 
     /*
