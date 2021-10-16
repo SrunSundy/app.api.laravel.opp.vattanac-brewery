@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -135,6 +134,21 @@ class Outlet extends Authenticatable implements JWTSubject
         
         return $data;
     }   
+
+
+    public static function forgotPassword($request)
+    {
+        if (!$customer_verification = OutletForgotCode::verifyForgotPasswordToken($request)) {
+            return false;
+        }
+
+        return self::updateOrCreate(
+            ['contact_number' => $customer_verification->phone_number],
+            ['password' => $request->new_password]
+        );
+    }
+
+ 
 
 
     public static function getTableName()

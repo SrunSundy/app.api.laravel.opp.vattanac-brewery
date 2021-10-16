@@ -12,6 +12,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "propaganistas/laravel-phone": "^4.3",
+        "twilio/sdk": "^6.29",
         "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {

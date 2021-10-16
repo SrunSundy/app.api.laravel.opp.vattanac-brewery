@@ -67,6 +67,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'authorization.erp' => \App\Http\Middleware\ErpAuthorizationMiddleware::class,
         'authorization.api' => \App\Http\Middleware\ApiAuthorizationnMiddleware::class,
+        'phone.auth' => \App\Http\Middleware\PhoneAuthMiddleware::class,
     ];
 
     /**

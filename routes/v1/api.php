@@ -5,8 +5,8 @@ use App\Http\Controllers\API\BrandController;
 use App\Http\Controllers\API\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\ForgotPasswordController;
 use App\Http\Controllers\API\OutletController;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,7 +25,16 @@ Route::group([
     Route::middleware(['authorization.api'])->group(function () {
         Route::post('/refresh', [AuthController::class, 'refresh']);
     });
+    Route::group([
+        'prefix' => 'forgot_password',
+        'middleware' => 'phone.auth'
+    ], function ($router) {
+        Route::post('request', [ForgotPasswordController::class, 'requestOtpCode'])->name('forgot_password.request');
+        Route::post('verify', [ForgotPasswordController::class, 'verifyOtpCode'])->name('forgot_password.verify');
+        Route::post('reset', [ForgotPasswordController::class, 'resetPassword'])->name('forgot_password.reset');
+    });
 });
+
 
 Route::group(['prefix' => 'outlet'] , function(){
     Route::post("/sign_up" , [OutletController::class, 'store']);

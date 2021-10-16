@@ -7,14 +7,15 @@ use App\Http\Requests\API\Outlet\AgentFeedbackRequest;
 use App\Http\Requests\API\Outlet\FeedbackRequest;
 use App\Http\Requests\API\Outlet\OutletRequest;
 use App\Http\Requests\API\Outlet\OutletWishlistRequest;
+use App\Http\Requests\API\Outlet\SendSmsRequest;
 use App\Http\Resources\API\Outlet\OutletWishlistResource;
 use App\Http\Resources\API\SaleUser\DetailSaleUSerResource;
+use App\Http\Traits\Twilio\TwilioSmsService;
 use App\Models\Agent;
 use App\Models\Feedback;
 use App\Models\Outlet;
 use App\Models\OutletWishlist;
 use App\Models\RequestOutlet;
-use App\Models\SaleUser;
 use App\Models\SaleUserFeedback;
 use Exception;
 use Illuminate\Http\Request;
@@ -23,6 +24,7 @@ use Illuminate\Support\Facades\DB;
 
 class OutletController extends Controller
 {
+    use TwilioSmsService;
     /**
      * Display a listing of the resource.
      *

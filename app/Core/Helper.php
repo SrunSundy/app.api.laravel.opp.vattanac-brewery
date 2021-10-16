@@ -9,6 +9,24 @@ function get_current_datetime()
     return $now;
 }
 
+function randomDigits($length)
+{
+    $digits = '';
+    $numbers = range(0, 9);
+    shuffle($numbers);
+    for ($i = 0; $i < $length; $i++) {
+        global $digits;
+        $digits .= $numbers[$i];
+    }
+
+    return $digits;
+}
+
+function currency($amount)
+{
+    return '$' . number_format($amount, 2, '.', ',');
+}
+
 function substruct_two_datetime($date1, $date2)
 {
     $datetime1 = strtotime($date1);
