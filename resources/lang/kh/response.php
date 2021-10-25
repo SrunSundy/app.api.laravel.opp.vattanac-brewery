@@ -1,5 +1,5 @@
 <?php
 return [
  
- "greeting" => "សដថសថសដថសដថសដថ"
+    "phone_not_existed" => "លេខទូរស័ព្ទមានរួចហើយ"
 ];

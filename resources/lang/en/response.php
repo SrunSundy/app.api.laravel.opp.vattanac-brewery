@@ -1,5 +1,5 @@
 <?php
 return [
  
- "greeting" => "Hello world. This is using english."
+    "phone_not_existed" => "Phone number already exists"
 ];
