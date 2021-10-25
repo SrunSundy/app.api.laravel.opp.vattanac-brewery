@@ -34,11 +34,18 @@ class OutletWishlist extends Model
     }
 
     public function getImageUrlAttribute(){
-        return $this->product->image_url;
+        if(filled($this->product))
+            return $this->product->image_url;
+        else 
+            return "";
+       
     }
 
     public function getUnitPriceAttribute(){
-        return $this->product->unit_price;
+        if(filled($this->product))
+            return $this->product->unit_price;
+        else 
+            return "0.0";
     }
 
     public function getIsWishlistAttribute(){
