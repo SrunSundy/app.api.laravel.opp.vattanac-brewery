@@ -13,6 +13,9 @@ return [
     |
     */
     'recieve_otp' => 'recieve OTP',
+    'attributes' => [
+        'otp' => "verificaiton code"
+    ], 
     'invalid' => 'The :attribute is invalid.',
     'accepted' => 'The :attribute must be accepted.',
     'accepted_if' => 'The :attribute must be accepted when :other is :value.',

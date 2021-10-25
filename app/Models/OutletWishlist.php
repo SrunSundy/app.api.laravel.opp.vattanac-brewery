@@ -27,7 +27,10 @@ class OutletWishlist extends Model
     */
 
     public function getNameAttribute(){
-        return $this->product->name;
+        if(filled($this->product))
+            return $this->product->name;
+        else 
+            return "";
     }
 
     public function getImageUrlAttribute(){

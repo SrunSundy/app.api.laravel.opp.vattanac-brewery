@@ -43,7 +43,7 @@ class ForgotPasswordController extends Controller
         DB::beginTransaction();
         try {
             if (!$token = OutletForgotCode::verifyOtp($request->contact_number, $request->otp)) {
-                return $this->fail(__('validation.invalid', ['attribute' => __('validation.attributes.otp')]));
+                return $this->fail(__('validation.invalid', ['attribute' => "verification code"]));
             }
             DB::commit();
 
