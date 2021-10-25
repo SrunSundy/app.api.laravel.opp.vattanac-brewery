@@ -23,6 +23,9 @@ class RequestOutlet extends Model
     public static function store($request)
     {
 
+        $request->request->add([
+            "contact_number" =>  request()->get("phone_number")
+        ]);
         $fields = [
             'owner_name',
             'outlet_name',

@@ -68,6 +68,7 @@ class Kernel extends HttpKernel
         'authorization.erp' => \App\Http\Middleware\ErpAuthorizationMiddleware::class,
         'authorization.api' => \App\Http\Middleware\ApiAuthorizationnMiddleware::class,
         'phone.auth' => \App\Http\Middleware\PhoneAuthMiddleware::class,
+        "localization" => \App\Http\Middleware\localization::class,
     ];
 
     /**
