@@ -146,7 +146,7 @@ class OutletController extends Controller
             DB::beginTransaction();
             if(RequestOutlet::isPhoneNumberExisted($request)){
                 DB::rollBack();
-                return $this->fail(trans("reponse.phone_not_existed"), 403);
+                return $this->fail(trans("response.phone_not_existed"), 403);
             }
             $data = RequestOutlet::store($request);
             DB::commit();
