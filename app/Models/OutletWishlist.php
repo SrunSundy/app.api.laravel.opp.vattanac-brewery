@@ -85,7 +85,7 @@ class OutletWishlist extends Model
 
     public static function list($params)
     {
-        $list = self::filter($params);
+        $list = self::filter($params)->has("product");
         return listLimit($list, $params);
     }
 
