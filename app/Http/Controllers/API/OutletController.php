@@ -144,7 +144,6 @@ class OutletController extends Controller
         try{
              
             DB::beginTransaction();
-            return $this->fail(RequestOutlet::isPhoneNumberExisted($request));
             if(RequestOutlet::isPhoneNumberExisted($request)){
                 DB::rollBack();
                 return $this->fail("Phone number already exists", 403);
