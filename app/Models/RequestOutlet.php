@@ -23,8 +23,8 @@ class RequestOutlet extends Model
     public static function store($request)
     {
 
-        $request->request->add([
-            "contact_number" =>  request()->get("phone_number")
+        request()->merge([
+            'contact_number' => phone($request["phone_number"], 'kh'),
         ]);
         $fields = [
             'owner_name',
