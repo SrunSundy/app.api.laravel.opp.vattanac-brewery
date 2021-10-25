@@ -39,7 +39,8 @@ class RequestOutlet extends Model
     }   
 
     public static function isPhoneNumberExisted($request){
-        $cnt = self::where("contact_number", $request["phone_number"])->count();
+        $phone = phone($request["phone_number"], 'kh');
+        $cnt = self::where("contact_number", $phone)->count();
         return $cnt >= 1;
     }
 }
