@@ -7,7 +7,7 @@ use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\OutletController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\OrderController;
-
+use App\Http\Controllers\API\PaymentController;
 
 Route::middleware(['localization'])->group(function () {
     Route::group([
@@ -59,5 +59,10 @@ Route::middleware(['localization'])->group(function () {
     Route::group(['prefix' => 'outlet'], function(){
         Route::post('/feedback_app', [OutletController::class, 'sendAppFeedback']);
         Route::post('/feedback_agent', [OutletController::class, 'sendAgentFeedback']); 
+    });
+
+
+    Route::group(['prefix' => 'payment'], function(){
+        Route::get('/account', [PaymentController::class, 'getPaymentAccount']);
     });
 });

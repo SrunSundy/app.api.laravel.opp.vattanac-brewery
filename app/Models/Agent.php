@@ -11,13 +11,24 @@ class Agent extends Model
     use HasFactory, ModelHelperTrait;
 
     /*
+    |--------------------------------------------------------------------------
+    | RELATIONS
+    |--------------------------------------------------------------------------
+    */
+    public function account()
+    {
+        return $this->hasOne(AgentAccount::class);
+    }
+
+    /*
     |------------------------------------------------------------ 
     | STATIC METHODS
     |------------------------------------------------------------
     */
-    public static function detail(){
+    public static function detail()
+    {
 
-        if(!auth()->user()->agent_id) return null;
+        if (!auth()->user()->agent_id) return null;
         $item =  self::where("id", auth()->user()->agent_id)->first();
         return $item;
     }

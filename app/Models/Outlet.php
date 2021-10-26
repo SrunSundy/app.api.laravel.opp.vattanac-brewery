@@ -108,6 +108,11 @@ class Outlet extends Authenticatable implements JWTSubject
         return $this->outlet_name;
     }
 
+    public function getPaymentAccountAttribute()
+    {
+        return $this->agent->account ?? false;
+    }
+
      /*
     |------------------------------------------------------------ 
     | STATIC METHODS
