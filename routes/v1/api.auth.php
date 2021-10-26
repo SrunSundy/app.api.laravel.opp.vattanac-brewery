@@ -64,5 +64,7 @@ Route::middleware(['localization'])->group(function () {
 
     Route::group(['prefix' => 'payment'], function(){
         Route::get('/account', [PaymentController::class, 'getPaymentAccount']);
+        Route::post('/', [PaymentController::class, 'store']);
+        Route::put('/', [PaymentController::class, 'update']);
     });
 });
