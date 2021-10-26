@@ -2,22 +2,27 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Core\EncryptLib;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Payment\AgentPaymentAccount;
+use App\Models\Cart;
+use App\Models\Order;
+use App\Models\PaymentTransaction;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
     public function getPaymentAccount()
     {
-        try{
+        try {
             $payment = auth()->user()->payment_account;
             if (!$payment) {
                 return $this->fail('No payment account');
             }
 
             return $this->ok(new AgentPaymentAccount($payment));
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return $this->fail($e->getMessage(), 500);
         }
     }
@@ -105,7 +110,6 @@ class PaymentController extends Controller
             if ($request->status === 'SUCCESS') {
                 $order = Order::placeOrder();
                 $payment->order_id = $order->id;
-                Session::flash('success', __('dialog.your_order_has_been_placed'));
             }
 
             $payment->status = $request->status;
@@ -118,4 +122,5 @@ class PaymentController extends Controller
             DB::rollback();
             abort(500);
         }
+    }
 }
