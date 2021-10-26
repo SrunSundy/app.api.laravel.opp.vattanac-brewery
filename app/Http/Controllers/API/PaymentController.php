@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Core\EncryptLib;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Order\CreatePaymentRequest;
 use App\Http\Resources\Payment\AgentPaymentAccount;
 use App\Models\Cart;
 use App\Models\Order;
@@ -58,7 +59,6 @@ class PaymentController extends Controller
             DB::commit();
             return $this->ok(true);
         } catch (Exception $e) {
-            report($e);
             DB::rollback();
             return $this->fail($e->getMessage(), 500);
         }
@@ -118,9 +118,8 @@ class PaymentController extends Controller
             DB::commit();
             return $this->ok(true);
         } catch (Exception $e) {
-            report($e);
             DB::rollback();
-            abort(500);
+            return $this->fail($e->getMessage(), 500);
         }
     }
 }
