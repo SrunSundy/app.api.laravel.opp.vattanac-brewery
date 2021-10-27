@@ -12,8 +12,8 @@ class Order extends Model
     use HasFactory;
     use OrderHelperTrait;
     protected $fillable = [
-        'outlet_id', 
-        'sale_user_id', 
+        'outlet_id',
+        'sale_user_id',
         'agent_id',
         'promotion_id',
         'state_id',
@@ -69,7 +69,8 @@ class Order extends Model
         return $this->orderState->state_label ?? '';
     }
 
-    public function getCreatedAtAttribute($value){
+    public function getCreatedAtAttribute($value)
+    {
         return DateLib::formatDateTime($value ?? '');
     }
 
@@ -95,14 +96,14 @@ class Order extends Model
 
         // create a event to happen on saving
         static::created(function ($model) {
-            
-            
-            $agent = Agent::where( "id",$model->agent_id)->first();
+
+
+            $agent = Agent::where("id", $model->agent_id)->first();
             $prefix = "SO";
-            if($agent && filled($agent->agent_number)){
-                $prefix = $agent->agent_number ."-SO";
+            if ($agent && filled($agent->agent_number)) {
+                $prefix = $agent->agent_number . "-SO";
             }
-            $model->order_number = self::generateOrderCode($model->id ,  $prefix);
+            $model->order_number = self::generateOrderCode($model->id,  $prefix);
             $model->save();
         });
     }
@@ -114,7 +115,7 @@ class Order extends Model
         }
         $outlet_id = auth()->user()->id ?? request()->get('outlet_id');
         $query->where("outlet_id", $outlet_id)
-            ->where("order_number", "like", "%".$params["search"]."%");
+            ->where("order_number", "like", "%" . $params["search"] . "%");
         return $query;
     }
 
@@ -185,14 +186,16 @@ class Order extends Model
             ]);
     }
 
-    public static function show(){
+    public static function show()
+    {
         return request()->route('order');
         // return self::where('id', request()->route('order'))
         //     ->where('outlet_id', auth()->user()->id)
         //     ->first();
     }
 
-    public static function showToCancel(){
+    public static function showToCancel()
+    {
         return self::where('id', request()->get('order_id'))
             ->where('outlet_id', auth()->user()->id)
             ->first();
@@ -229,15 +232,15 @@ class Order extends Model
 
         $value = mapRequest($fields, $request);
         $order = self::create($value);
-        if($order){
+        if ($order) {
             $products = [];
             $req_products = request()->get("products");
-            foreach($req_products as $product){
+            foreach ($req_products as $product) {
                 //dd($product);
                 $product_sub_total = self::calculateSubTotalAmount($product["quantity"], $product["unit_price"]);
                 $product_total = self::calculateTotalAmount($product_sub_total, 0);
 
-                array_push($products , [
+                array_push($products, [
                     'order_id' => $order->id,
                     'product_variant_id' => $product["product_id"],
                     'quantity' => $product["quantity"],
@@ -250,6 +253,71 @@ class Order extends Model
             }
             OrderProduct::insert($products);
         }
+
+        return $order;
+    }
+
+    public static function placeOrder()
+    {
+        $cart = Cart::where('outlet_id', auth()->user()->id)
+            ->first();
+
+        $order = self::create([
+            'outlet_id' => $cart->outlet_id,
+            'promotion_id' => $cart->promotion_id,
+            'is_urgent' => $cart->is_urgent,
+            'agent_id' => auth()->user()->agent_id,
+            'state_id' => 202,
+        ]);
+
+        $sub_total = 0;
+        $total = 0;
+        foreach ($cart->cart_products as $cart_product) {
+            // TO DO : Change from find product to find product variant
+            $product = Product::find($cart_product->product_variant_id);
+
+            if (filled($product)) {
+                $product_sub_total = self::calculateSubTotalAmount($cart_product->quantity, $product->unit_price);
+                $product_total = self::calculateTotalAmount($product_sub_total, 0);
+
+                $order_product = OrderProduct::create([
+                    'order_id' => $order->id,
+                    'product_variant_id' => $cart_product->product_variant_id,
+                    'quantity' => $cart_product->quantity,
+                    'unit_price' => $product->unit_price,
+                    'sub_total' => $product_sub_total,
+                    'percent_off' => 0, // TO DO : Get percentage off from promotion
+                    'amount_off' => 0, // TO DO : Get amount off from promotion
+                    'total' => $product_total,
+                ]);
+
+                $sub_total += $product_sub_total;
+                $total += $product_total;
+            }
+        }
+
+        $order->sub_total = $sub_total;
+        $order->percent_off = 0;
+        $order->amount_off = 0;
+        $order->total = $total;
+        $order->save();
+
+        // TO DO : Copy the cart to store in cart history
+        $cart->cart_products()->delete();
+        $cart->delete();
+
+        // $sale_user = SaleUser::find($order->sale_user_id);
+        // $message = MessageTemplate::getNewOrderMessage($order);
+        // if ($message) {
+        //     $url = Configuration::getValueByKey(Configuration::ERP_URL);
+
+        //     // TO DO : To replace the url with ERP
+        //     $url = strtr($url, [
+        //         '[ORDER_ID]' => $order->id,
+        //     ]);
+
+        //     $sale_user->notify(new TelegramNotification($message, $url));
+        // }
 
         return $order;
     }

@@ -39,10 +39,10 @@ trait OrderHelperTrait
      */
     public static function generateOrderCode($id, $prefix = 'SO')
     {
-        $char = intval($id / 99999999);
-        $number = $id % 99999999;
+        $char = intval($id / 99999);
+        $number = $id % 99999;
         if ($number === 0) {
-            $number = 99999999;
+            $number = 99999;
             $char--;
         }
 
@@ -52,6 +52,6 @@ trait OrderHelperTrait
             $char -= 25;
         }
 
-        return $prefix . Carbon::now()->format('y').'-' . sprintf("%08d", $number) . ($char > 0 ? chr($char + 64) : '') . $str;
+        return $prefix . Carbon::now()->format('Ym') . sprintf("%05d", $number) . ($char > 0 ? chr($char + 64) : '') . $str;
     }
 }
