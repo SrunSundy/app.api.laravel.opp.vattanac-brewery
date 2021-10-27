@@ -18,7 +18,7 @@ class PaymentController extends Controller
     {
         try {
             $payment = auth()->user()->payment_account;
-            if (!filled($payment)) {
+            if (!$payment || !filled($payment)) {
                 return $this->fail('No payment account');
             }
 
