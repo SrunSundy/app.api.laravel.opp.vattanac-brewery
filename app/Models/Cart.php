@@ -9,12 +9,23 @@ class Cart extends Model
 {
     use HasFactory;
     protected $fillable = ['outlet_id', 'promotion_id', 'is_urgent','created_by'];
-
+    
     /*
     |------------------------------------------------------------ 
     | ACCESSORS
     |------------------------------------------------------------
     */
+    public function getTotalAttribute()
+    {
+        $total = 0;
+
+        foreach ($this->cart_products as $cart_product) {
+            $total += ($cart_product->quantity * $cart_product->unit_price);
+        }
+
+        return $total;
+    }
+
     public function getOutletNameAttribute()
     {
         return $this->outlet->outlet_name ?? '';
@@ -69,6 +80,11 @@ class Cart extends Model
     public function outlet()
     {
         return $this->belongsTo(Outlet::class, 'outlet_id');
+    }
+
+    public function cart_products()
+    {
+        return $this->hasMany(CartProduct::class, 'cart_id');
     }
 
     /*
