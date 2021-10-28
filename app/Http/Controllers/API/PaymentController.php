@@ -80,13 +80,9 @@ class PaymentController extends Controller
             if (!$cart_id && $cart_id != $cart->id) {
                 return $this->fail(__('validation.not_found', ['attribute' => __('validation.attributes.cart')]));
             }
-
-            info('log', [
-                'request_amount' => $request->amount,
-                'cart_amount' => $cart->total,
-            ]);
+            
             if ($request->amount != $cart->total) {
-                return $this->fail(__('validation.not_found', ['attribute' => __('validation.attributes.cart')]));
+                return $this->fail(__('validation.incorrect', ['attribute' => 'amount']));
             }
 
             $payment = PaymentTransaction::where([
