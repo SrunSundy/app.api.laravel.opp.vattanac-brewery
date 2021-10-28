@@ -44,7 +44,6 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            
         });
     }
 
@@ -62,36 +61,36 @@ class Handler extends ExceptionHandler
             $code = $exception->getStatusCode();
             $message = Response::$statusTexts[$code];
 
-            return $this->fail($message , $code);
+            return $this->fail($message, $code);
         }
 
         if ($exception instanceof ModelNotFoundException) {
             $model = strtolower(class_basename($exception->getModel()));
-            
-            return $this->fail(__('auth.record_not_found') , Response::HTTP_NOT_FOUND);
+
+            return $this->fail(__('auth.record_not_found'), Response::HTTP_NOT_FOUND);
             //return responseFail(trans('response.model_not_found', ['attribute' => $model]), Response::HTTP_NOT_FOUND);
         }
 
         if ($exception instanceof AuthorizationException) {
-            return $this->fail(__('auth.forbidden') , Response::HTTP_FORBIDDEN);
+            return $this->fail(__('auth.forbidden'), Response::HTTP_FORBIDDEN);
             //return responseFail($exception->getMessage(), Response::HTTP_FORBIDDEN);
         }
 
         if ($exception instanceof AuthenticationException) {
-            return $this->fail(__('auth.unauthorized') , Response::HTTP_UNAUTHORIZED);
+            return $this->fail(__('auth.unauthorized'), Response::HTTP_UNAUTHORIZED);
             //return responseFail($exception->getMessage(), Response::HTTP_UNAUTHORIZED);
         }
 
         if ($exception instanceof ValidationException) {
             //$errors = $exception->validator->errors()->getMessages();
 
-            return parent::render($request, $exception);
-            //return $this->fail($exception->getMessage() , Response::HTTP_UNPROCESSABLE_ENTITY);
-            //return responseFail($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+            // return parent::render($request, $exception);
+            return $this->fail($exception->getMessage(), Response::HTTP_UNPROCESSABLE_ENTITY);
+            // return responseFail($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         // return $this->fail("Server Error" , Response::HTTP_INTERNAL_SERVER_ERROR);
         //return $this->fail($exception->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
 
-        //return parent::render($request, $exception);
+        return parent::render($request, $exception);
     }
 }

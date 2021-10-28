@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Order;
 
-use App\Http\Requests\DefaultRequest;
+use App\Http\Requests\DefaultFormRequest;
 
-class CreatePaymentRequest extends DefaultRequest
+class CreatePaymentRequest extends DefaultFormRequest
 {
     /**
      * Get the validation rules that apply to the request.
