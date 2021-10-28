@@ -30,4 +30,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'vb_cipher' => [
+        'password' => '4EuvVktDGWOmbiPXgYm4DWYtGZ9YfMzS', // 32 byte
+        'iv' => 'r2xl5zEUfCInSsdx', // 16 byte
+    ],
 ];

@@ -33,7 +33,7 @@ class PaymentController extends Controller
         try {
             DB::beginTransaction();
 
-            $decypt = EncryptLib::decryptString($request->encrypt_cart_id);
+            $decypt = EncryptLib::decryptString($request->encrypt_cart_id, config('services.cipher.password'), config('services.cipher.iv'));
             $cart_id_arr = explode('-', $decypt);
             $cart_id = $cart_id_arr[0] ?? '';
             $cart = Cart::where('outlet_id', auth()->user()->id)
@@ -69,7 +69,7 @@ class PaymentController extends Controller
         try {
             DB::beginTransaction();
 
-            $decypt = EncryptLib::decryptString($request->encrypt_cart_id);
+            $decypt = EncryptLib::decryptString($request->encrypt_cart_id, config('services.cipher.password'), config('services.cipher.iv'));
             $cart_id_arr = explode('-', $decypt);
             $cart_id = $cart_id_arr[0] ?? '';
             $cart = Cart::where('outlet_id', auth()->user()->id)
