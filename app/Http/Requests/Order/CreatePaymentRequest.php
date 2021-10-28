@@ -14,7 +14,7 @@ class CreatePaymentRequest extends DefaultFormRequest
     public function rules()
     {
         return [
-            'encrypt_cart_id' => 'required',
+            'encrypt_cart_id' => 'required|max:30',
             'transaction_id' => 'required',
             'amount' => 'required',
             'status' => 'required',
