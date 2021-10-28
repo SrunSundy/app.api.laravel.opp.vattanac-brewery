@@ -44,7 +44,7 @@ class PaymentController extends Controller
             }
 
             if ($request->amount != $cart->total) {
-                return $this->fail(__('validation.not_found', ['attribute' => __('validation.attributes.cart')]));
+                return $this->fail(__('validation.incorrect', ['attribute' => 'amount']));
             }
 
             $payment = PaymentTransaction::create([
