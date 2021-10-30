@@ -6,10 +6,11 @@ use App\Http\Traits\ModelHelperTrait;
 use App\Scopes\ActiveScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use HasFactory , ModelHelperTrait;
+    use HasFactory , ModelHelperTrait, SoftDeletes;
 
     
     /*
