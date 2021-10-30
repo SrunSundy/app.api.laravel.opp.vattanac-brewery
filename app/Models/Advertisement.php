@@ -6,11 +6,12 @@ use App\Http\Traits\ModelHelperTrait;
 use App\Scopes\ActiveScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 class Advertisement extends Model
 {
-    use HasFactory , ModelHelperTrait;
+    use HasFactory , ModelHelperTrait, SoftDeletes;
 
     /*
     |------------------------------------------------------------ 
