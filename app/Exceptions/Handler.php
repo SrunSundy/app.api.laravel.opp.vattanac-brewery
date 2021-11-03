@@ -56,11 +56,9 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-
         if ($exception instanceof HttpException) {
             $code = $exception->getStatusCode();
             $message = Response::$statusTexts[$code];
-
             return $this->fail($message, $code);
         }
 
@@ -68,29 +66,22 @@ class Handler extends ExceptionHandler
             $model = strtolower(class_basename($exception->getModel()));
 
             return $this->fail(__('auth.record_not_found'), Response::HTTP_NOT_FOUND);
-            //return responseFail(trans('response.model_not_found', ['attribute' => $model]), Response::HTTP_NOT_FOUND);
         }
 
         if ($exception instanceof AuthorizationException) {
             return $this->fail(__('auth.forbidden'), Response::HTTP_FORBIDDEN);
-            //return responseFail($exception->getMessage(), Response::HTTP_FORBIDDEN);
         }
 
         if ($exception instanceof AuthenticationException) {
             return $this->fail(__('auth.unauthorized'), Response::HTTP_UNAUTHORIZED);
-            //return responseFail($exception->getMessage(), Response::HTTP_UNAUTHORIZED);
         }
 
         if ($exception instanceof ValidationException) {
-            //$errors = $exception->validator->errors()->getMessages();
+            $errors = $exception->validator->errors()->getMessages();
 
-            // return parent::render($request, $exception);
-            return $this->fail($exception->getMessage(), Response::HTTP_UNPROCESSABLE_ENTITY);
-            // return responseFail($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+            return $this->fail($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-        // return $this->fail("Server Error" , Response::HTTP_INTERNAL_SERVER_ERROR);
-        //return $this->fail($exception->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
 
-        return parent::render($request, $exception);
+        return $this->fail($exception->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }
