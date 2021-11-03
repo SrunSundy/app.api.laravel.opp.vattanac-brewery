@@ -14,6 +14,7 @@ class PaymentTransaction extends Model
         'outlet_id',
         'cart_id',
         'encrypt_cart_id',
+        'vb_order_id',
         'transaction_id',
         'amount',
         'status',

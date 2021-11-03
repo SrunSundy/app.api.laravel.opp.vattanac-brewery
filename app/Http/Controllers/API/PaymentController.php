@@ -54,7 +54,7 @@ class PaymentController extends Controller
                 'cart_id' => $cart_id,
                 'outlet_id' => auth()->user()->id,
                 'encrypt_cart_id' => $request->encrypt_cart_id,
-                'transaction_id' => $request->transaction_id,
+                'vb_order_id' => $request->vb_order_id,
                 'amount' => $request->amount,
                 'status' => $request->status,
             ]);
@@ -80,13 +80,13 @@ class PaymentController extends Controller
             if (!$cart_id && $cart_id != $cart->id) {
                 return $this->fail(__('validation.not_found', ['attribute' => __('validation.attributes.cart')]));
             }
-            
+
             if ($request->amount != $cart->total) {
                 return $this->fail(__('validation.incorrect', ['attribute' => 'amount']));
             }
 
             $payment = PaymentTransaction::where([
-                'transaction_id' => $request->transaction_id,
+                'vb_order_id' => $request->vb_order_id,
                 'order_id' => null,
                 'encrypt_cart_id' => $request->encrypt_cart_id,
                 'outlet_id' => auth()->user()->id,
@@ -113,6 +113,7 @@ class PaymentController extends Controller
             if ($request->status === 'SUCCESS') {
                 $order = Order::placeOrder();
                 $payment->order_id = $order->id;
+                $payment->transaction_id = $order->transaction_id;
             }
 
             $payment->status = $request->status;
