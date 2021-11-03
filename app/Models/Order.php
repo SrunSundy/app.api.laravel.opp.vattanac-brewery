@@ -74,6 +74,15 @@ class Order extends Model
         return DateLib::formatDateTime($value ?? '');
     }
 
+    public function getVbTransactionCodeAttribute()
+    {
+        return $this->transaction->transaction_id ?? '-';
+    }
+
+    public function getVbOrderCodeAttribute()
+    {
+        return $this->transaction->vb_order_id ?? '-';
+    }
 
     /*
     |------------------------------------------------------------ 
@@ -147,6 +156,12 @@ class Order extends Model
     public function orderState()
     {
         return $this->belongsTo(OrderState::class, "state_id", 'order_state_code');
+    }
+
+    public function transaction()
+    {
+        return $this->hasOne(PaymentTransaction::class, 'order_id')
+            ->where('status', 'SUCCESS');
     }
 
     /*

@@ -120,7 +120,9 @@ class PaymentController extends Controller
             $payment->save();
 
             DB::commit();
-            return $this->ok(true);
+            return $this->ok([
+                'order_id' => $payment->order_id,
+            ]);
         } catch (Exception $e) {
             DB::rollback();
             return $this->fail($e->getMessage(), 500);
