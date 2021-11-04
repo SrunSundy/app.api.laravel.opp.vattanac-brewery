@@ -113,7 +113,7 @@ class PaymentController extends Controller
             if ($request->status === 'SUCCESS') {
                 $order = Order::placeOrder();
                 $payment->order_id = $order->id;
-                $payment->transaction_id = $order->transaction_id;
+                $payment->transaction_id = $request->transaction_id;
             }
 
             $payment->status = $request->status;
