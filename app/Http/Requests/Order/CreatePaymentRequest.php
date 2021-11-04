@@ -15,7 +15,7 @@ class CreatePaymentRequest extends DefaultFormRequest
     {
         return [
             'encrypt_cart_id' => 'required|max:30',
-            'transaction_id' => 'required',
+            'vb_order_id' => 'required',
             'amount' => 'required',
             'status' => 'required',
         ];
