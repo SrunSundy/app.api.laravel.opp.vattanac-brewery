@@ -6,6 +6,7 @@ use App\Core\EncryptLib;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\CreatePaymentRequest;
 use App\Http\Resources\Payment\AgentPaymentAccount;
+use App\Http\Traits\TelegramLogTrait;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\PaymentTransaction;
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
+    use TelegramLogTrait;
+
     public function getPaymentAccount()
     {
         try {
@@ -63,6 +66,7 @@ class PaymentController extends Controller
             return $this->ok(true);
         } catch (Exception $e) {
             DB::rollback();
+            $this->logDataTelegram($e->getMessage());
             return $this->fail($e->getMessage(), 500);
         }
     }
@@ -125,6 +129,7 @@ class PaymentController extends Controller
             ]);
         } catch (Exception $e) {
             DB::rollback();
+            $this->logDataTelegram($e->getMessage());
             return $this->fail($e->getMessage(), 500);
         }
     }

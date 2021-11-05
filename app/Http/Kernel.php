@@ -69,6 +69,7 @@ class Kernel extends HttpKernel
         'authorization.api' => \App\Http\Middleware\ApiAuthorizationnMiddleware::class,
         'phone.auth' => \App\Http\Middleware\PhoneAuthMiddleware::class,
         "localization" => \App\Http\Middleware\localization::class,
+        'log.telegram' => \App\Http\Middleware\LogRequestToTelegram::class,
     ];
 
     /**

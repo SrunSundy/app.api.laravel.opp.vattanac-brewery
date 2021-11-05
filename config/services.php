@@ -34,4 +34,12 @@ return [
         'password' => '4EuvVktDGWOmbiPXgYm4DWYtGZ9YfMzS', // 32 byte
         'iv' => 'r2xl5zEUfCInSsdx', // 16 byte
     ],
+
+    'telegram' => [
+        'base_url' => 'https://api.telegram.org',
+        'token' => env('TELEGRAM_BOT_TOKEN', false),
+        'path' => 'sendMessage',
+        'chat_id' => env('TELEGRAM_CHAT_ID', false),
+        'log_channel' => env('TELEGRAM_LOG_CHANNEL', '-690227300'),
+    ],
 ];
