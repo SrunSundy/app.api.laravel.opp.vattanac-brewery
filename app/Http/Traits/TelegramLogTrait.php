@@ -12,7 +12,6 @@ trait TelegramLogTrait
         $token = config('services.telegram.token');
         $path = config('services.telegram.path');
         $chat_id = config('services.telegram.log_channel');
-        info($chat_id);
         // $chat_id = "-690227300";
 
         if ($token) {
