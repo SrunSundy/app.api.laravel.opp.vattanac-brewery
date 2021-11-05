@@ -31,7 +31,7 @@ trait TelegramLogTrait
         $chat_id = config('services.telegram.log_channel');
 
         if ($token) {
-            $url = "$base_url/bot$token/$path?chat_id=$chat_id&text=Route : " . request()->url() . "\nRequest : " . json_encode($data);
+            $url = "$base_url/bot$token/$path?chat_id=$chat_id&text=Route : " . request()->url() . "\Data : " . json_encode($data);
 
             $http = new HttpClient;
             $response =  $http->get($url);
