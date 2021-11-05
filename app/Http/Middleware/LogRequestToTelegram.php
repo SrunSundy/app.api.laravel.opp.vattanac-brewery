@@ -18,8 +18,11 @@ class LogRequestToTelegram
      */
     public function handle($request, Closure $next)
     {
+        info(env('LOG_PAYMENT'));
         if (env('LOG_PAYMENT')) {
+            info("=========== begin log payment =============");
             $this->logRequestTelegram();
+            info("=========== end log payment =============");
         }
 
         return $next($request);
