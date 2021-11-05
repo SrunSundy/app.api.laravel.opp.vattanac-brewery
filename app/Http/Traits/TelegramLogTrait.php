@@ -15,7 +15,7 @@ trait TelegramLogTrait
         // $chat_id = "-690227300";
 
         if ($token) {
-            $url = "$base_url/bot$token/$path?chat_id=$chat_id&text=Route : " . request()->url() . "\nRequest : " . json_encode(request()->all());
+            $url = "$base_url/bot$token/$path?chat_id=$chat_id&text=Route : " . request()->url() . "\nRequest : " . json_encode(request()->all()) . "\nDevice : " . request()->header('Device') . "\nIP : " . request()->ip();
 
             $http = new HttpClient;
             $response =  $http->get($url);
@@ -31,7 +31,7 @@ trait TelegramLogTrait
         $chat_id = config('services.telegram.log_channel');
 
         if ($token) {
-            $url = "$base_url/bot$token/$path?chat_id=$chat_id&text=Route : " . request()->url() . "\Data : " . json_encode($data);
+            $url = "$base_url/bot$token/$path?chat_id=$chat_id&text=Route : " . request()->url() . "\Data : " . json_encode($data) . "\nDevice : " . request()->header('Device') . "\nIP : " . request()->ip();
 
             $http = new HttpClient;
             $response =  $http->get($url);
