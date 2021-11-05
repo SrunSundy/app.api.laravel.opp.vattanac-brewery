@@ -63,7 +63,7 @@ Route::middleware(['localization'])->group(function () {
 
 
     Route::group(['prefix' => 'payment'], function () {
-        Route::get('/account', [PaymentController::class, 'getPaymentAccount']);
+        Route::get('/account', [PaymentController::class, 'getPaymentAccount'])->middleware('log.telegram');
         Route::post('/', [PaymentController::class, 'store'])->middleware('log.telegram');
         Route::put('/', [PaymentController::class, 'update'])->middleware('log.telegram');
     });
