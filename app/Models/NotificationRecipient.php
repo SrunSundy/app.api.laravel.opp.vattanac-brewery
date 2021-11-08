@@ -2,22 +2,25 @@
 
 namespace App\Models;
 
+use App\Http\Traits\ModelHelperTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Traits\MultiPrimaryKeyTrait;
 use Illuminate\Notifications\Notifiable;
 
 class NotificationRecipient extends Model
 {
-    use Notifiable, MultiPrimaryKeyTrait;
+    use Notifiable, ModelHelperTrait , MultiPrimaryKeyTrait;
 
+    public $incrementing = false;
+    protected $primaryKey = ['notification_id', 'user_id', 'user_type'];
+    
     protected $fillable = [
         'notification_id',
         'user_id',
         'user_type',
         'is_read',
     ];
-
-    protected $primaryKey = ['notification_id', 'user_id', 'user_type'];
+  
 
     protected $casts = [
         'is_read' => 'boolean',
