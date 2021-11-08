@@ -64,9 +64,31 @@ class NotificationRecipient extends Model
     |--------------------------------------------------------------------------
     */
 
-    /*
+   
+      /*
     |--------------------------------------------------------------------------
     | STATIC FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    public static function read($notification_id)
+    {
+        self::updateOrCreate([
+            'notification_id' => $notification_id,
+            'user_id' => auth()->user()->id,
+            'user_type' => Outlet::getTableName(),
+        ], [
+            'is_read' => true,
+        ]);
+    }
+
+    public static function readAll()
+    {
+        self::where([
+            'user_id' => auth()->user()->id,
+            'user_type' => Outlet::getTableName(),
+            'is_read' => false,
+        ])->update([
+            'is_read' => true,
+        ]);
+    }
 }
