@@ -47,6 +47,7 @@ Route::middleware(['localization'])->group(function () {
         Route::post('/cart/remove', [CartController::class, 'remove']);
         Route::post('/cart/remove_all', [CartController::class, 'removeAll']);
         Route::get('/notifications', [NotificationController::class, 'index']);
+        Route::get('/notifications/count/unread', [NotificationController::class, 'unRead']);
     });
 
     Route::group(['prefix' => 'order'], function () {
