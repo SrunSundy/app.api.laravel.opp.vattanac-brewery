@@ -5,8 +5,11 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\API\Notification\ListNotificationResource;
 use App\Models\Notification;
+use App\Models\NotificationRecipient;
 use Exception;
+use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NotificationController extends Controller
 {
@@ -40,6 +43,52 @@ class NotificationController extends Controller
             $list["list"] = ListNotificationResource::collection($list["list"]);
             return $this->ok($list);
         } catch (Exception $e) {
+            return $this->fail($e->getMessage(), 500);
+        }
+    }
+
+
+    public function countMyUnread()
+    {
+        try {
+            $unread_notification = Notification::unreadRecord()->count();
+
+            return $this->ok($unread_notification);
+        } catch (Exception $e) {
+            return $this->fail($e->getMessage(), 500);
+        }
+    }
+
+    public function readAllNotification()
+    {
+        DB::beginTransaction();
+        try {
+            NotificationRecipient::readAll();
+
+            DB::commit();
+            return $this->ok("");
+        } catch (Exception $e) {
+            DB::rollBack();
+            return $this->fail($e->getMessage(), 500);
+        }
+    }
+
+    public function readNotification($notification)
+    {
+        DB::beginTransaction();
+        try {
+            $data = Notification::restrictRecord()->find($notification);
+
+            if (!$data) {
+                return $this->fail(__('auth.record_not_found'), 404);
+            }
+
+            NotificationRecipient::read($notification);
+
+            DB::commit();
+            return $this->ok("");
+        } catch (Exception $e) {
+            DB::rollBack();
             return $this->fail($e->getMessage(), 500);
         }
     }

@@ -46,8 +46,6 @@ Route::middleware(['localization'])->group(function () {
         Route::post('/cart/reorder', [CartController::class, 'reorder']);
         Route::post('/cart/remove', [CartController::class, 'remove']);
         Route::post('/cart/remove_all', [CartController::class, 'removeAll']);
-        Route::get('/notifications', [NotificationController::class, 'index']);
-        Route::get('/notifications/count/unread', [NotificationController::class, 'unRead']);
     });
 
     Route::group(['prefix' => 'order'], function () {
@@ -68,4 +66,14 @@ Route::middleware(['localization'])->group(function () {
         Route::post('/', [PaymentController::class, 'store'])->middleware('log.telegram');
         Route::put('/', [PaymentController::class, 'update'])->middleware('log.telegram');
     });
+
+    Route::group([
+        'prefix' => 'notifications'
+    ], function ($router) {
+        Route::get('/', [NotificationController::class, 'index']);
+        Route::post('/read', [NotificationController::class, 'readAllNotification']);
+        Route::post('/{notification}/read', [NotificationController::class, 'readNotification']);
+        Route::get('/unread/count', [NotificationController::class, 'unRead']);
+    });
+
 });
