@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Traits\MultiPrimaryKeyTrait;
+use Illuminate\Notifications\Notifiable;
 
 class NotificationRecipient extends Model
 {
+    use Notifiable, MultiPrimaryKeyTrait;
+
     protected $fillable = [
         'notification_id',
         'user_id',
