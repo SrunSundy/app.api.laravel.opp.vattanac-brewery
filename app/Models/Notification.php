@@ -123,4 +123,10 @@ class Notification extends Model
         $list = self::restrictRecord();
         return listLimit($list, $params);
     }
+
+    public static function listUnRead($params)
+    {
+        $list = self::unreadRecord();
+        return listLimit($list, $params);
+    }
 }

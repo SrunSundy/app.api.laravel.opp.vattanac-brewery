@@ -29,6 +29,21 @@ class NotificationController extends Controller
         }
     }
 
+
+    public function unRead()
+    {
+         //
+        try {
+            $this->getParams();
+            $list = Notification::listUnRead($this->params);
+
+            $list["list"] = ListNotificationResource::collection($list["list"]);
+            return $this->ok($list);
+        } catch (Exception $e) {
+            return $this->fail($e->getMessage(), 500);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
