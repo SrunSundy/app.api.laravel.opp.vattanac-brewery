@@ -69,6 +69,16 @@ class Order extends Model
         return $this->orderState->state_label ?? '';
     }
 
+    public function getOrderStateCodeAttribute()
+    {
+        return $this->orderState->order_state_code ?? '';
+    }
+
+    public function getStateLabelAttribute()
+    {
+        return $this->orderState->state_label ?? '';
+    }
+
     public function getCreatedAtAttribute($value)
     {
         return DateLib::formatDateTime($value ?? '');
