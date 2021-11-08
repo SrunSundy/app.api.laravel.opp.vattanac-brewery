@@ -13,6 +13,8 @@ class NotificationRecipient extends Model
         'is_read',
     ];
 
+    protected $primaryKey = ['notification_id', 'user_id', 'user_type'];
+
     protected $casts = [
         'is_read' => 'boolean',
     ];
