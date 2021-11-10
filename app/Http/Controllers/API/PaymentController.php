@@ -26,9 +26,13 @@ class PaymentController extends Controller
             if($status == "PENDING"){
                 $data["is_pending"] = true;
                 $data["external_id"] = $lastTransaction->encrypt_cart_id; 
+                $data["orderId"] = $lastTransaction->order_id; 
+                $data["amount"] = $lastTransaction->amount;  
             }else{
                 $data["is_pending"] = false;
                 $data["external_id"] = null; 
+                $data["orderId"] = null;
+                $data["amount"] = null; 
             }
             return $this->ok($data);
         }catch(Exception $e){
