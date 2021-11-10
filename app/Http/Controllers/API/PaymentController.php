@@ -22,7 +22,6 @@ class PaymentController extends Controller
         try{
             $lastTransaction = PaymentTransaction::getLastTransaction();
             $status = $lastTransaction->status;
-            dd($status);
             $data = array();
             if($status == "PENDING"){
                 $data["is_pending"] = true;
