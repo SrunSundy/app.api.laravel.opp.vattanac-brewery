@@ -21,6 +21,8 @@ class PaymentController extends Controller
     public function hasPendingTransaction(){
         try{
             $lastTransaction = PaymentTransaction::getLastTransaction();
+
+            dd($lastTransaction);
             $data = array();
             if($lastTransaction->status == "PENDING"){
                 $data["is_pending"] = true;
