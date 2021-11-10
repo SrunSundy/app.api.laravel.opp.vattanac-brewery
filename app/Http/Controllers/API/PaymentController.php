@@ -17,6 +17,24 @@ class PaymentController extends Controller
 {
     use TelegramLogTrait;
 
+
+    public function hasPendingTransaction(){
+        try{
+            $lastTransaction = PaymentTransaction::getLastTransaction();
+            $data = array();
+            if($lastTransaction->status == "PENDING"){
+                $data["is_pending"] = true;
+                $data["external_id"] = $lastTransaction->encrypt_cart_id; 
+            }else{
+                $data["is_pending"] = false;
+                $data["external_id"] = null; 
+            }
+            return $this->ok($data);
+        }catch(Exception $e){
+            return $this->fail($e->getMessage(), 500);
+        }
+    }
+
     public function getPaymentAccount()
     {
         try {
