@@ -25,7 +25,7 @@ class AgentFeedbackRequest extends FormRequest
     {
         return [
             "sale_user_id" => "required",
-            "description" => "required|max:200"
+            // "description" => "required|max:200"
         ];
     }
 }
