@@ -15,8 +15,9 @@ class FeedbackRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            "description" => "required|max:200"
-        ];
+        return [];
+        // return [
+        //     "description" => "required|max:200"
+        // ];
     }
 }
