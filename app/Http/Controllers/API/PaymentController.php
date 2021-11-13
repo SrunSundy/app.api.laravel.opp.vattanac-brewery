@@ -21,8 +21,13 @@ class PaymentController extends Controller
     public function hasPendingTransaction(){
         try{
             $lastTransaction = PaymentTransaction::getLastTransaction();
-            $status = $lastTransaction->status;
-            $data = array();
+
+            $data = array(); 
+            $status = "";
+            if(filled($lastTransaction)){
+                $status = $lastTransaction->status;
+            }
+            
             if($status == "PENDING"){
                 $data["is_pending"] = true;
                 $data["external_id"] = $lastTransaction->encrypt_cart_id; 
