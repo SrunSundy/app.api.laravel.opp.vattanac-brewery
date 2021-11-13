@@ -36,7 +36,7 @@ trait TelegramLogTrait
             $http = new HttpClient;
             $response =  $http->get($url);
 
-            // info('Telegram:', ['data' => $response->getBody()]);
+            info('Telegram:', ['data' => $response->getBody()]);
         }
     }
 }
