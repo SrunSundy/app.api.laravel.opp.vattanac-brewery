@@ -10,6 +10,7 @@ use App\Http\Traits\TelegramLogTrait;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\PaymentTransaction;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -26,6 +27,18 @@ class PaymentController extends Controller
             $status = "";
             if(filled($lastTransaction)){
                 $status = $lastTransaction->status;
+                $created_at = Carbon::parse($lastTransaction->created_at);
+                $second = now()->diffInSeconds($created_at);
+                info("====== created_at : " . $created_at);
+                info("====== now : " . now());
+                info("====== second : " . $second);
+
+                if($status == "PENDING" && $second > 90) {
+                    $status = "";
+                    $lastTransaction->update([
+                        'status' => 'FAIL',
+                    ]);
+                }
             }
             
             if($status == "PENDING"){
