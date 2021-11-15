@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ForgotPasswordController;
 use App\Http\Controllers\API\OutletController;
+use App\Http\Controllers\API\PaymentController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -61,4 +63,4 @@ Route::middleware(['localization'])->group(function () {
 
 //Route::post("/update-order-state", [OrderController::class , 'update_order_state'])->name("order.update_order_state");
 
-
+Route::post("log", [PaymentController::class, 'logData']);
