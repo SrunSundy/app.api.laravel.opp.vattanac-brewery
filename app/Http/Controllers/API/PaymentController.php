@@ -19,13 +19,14 @@ class PaymentController extends Controller
     use TelegramLogTrait;
 
 
-    public function hasPendingTransaction(){
-        try{
+    public function hasPendingTransaction()
+    {
+        try {
             $lastTransaction = PaymentTransaction::getLastTransaction();
 
-            $data = array(); 
+            $data = array();
             $status = "";
-            if(filled($lastTransaction)){
+            if (filled($lastTransaction)) {
                 $status = $lastTransaction->status;
                 $created_at = Carbon::parse($lastTransaction->created_at);
                 $second = now()->diffInSeconds($created_at);
@@ -40,20 +41,20 @@ class PaymentController extends Controller
                     ]);
                 }
             }
-            
-            if($status == "PENDING"){
+
+            if ($status == "PENDING") {
                 $data["is_pending"] = true;
-                $data["external_id"] = $lastTransaction->encrypt_cart_id; 
-                $data["orderId"] = $lastTransaction->vb_order_id; 
-                $data["amount"] = $lastTransaction->amount;  
-            }else{
+                $data["external_id"] = $lastTransaction->encrypt_cart_id;
+                $data["orderId"] = $lastTransaction->vb_order_id;
+                $data["amount"] = $lastTransaction->amount;
+            } else {
                 $data["is_pending"] = false;
-                $data["external_id"] = null; 
+                $data["external_id"] = null;
                 $data["orderId"] = null;
-                $data["amount"] = null; 
+                $data["amount"] = null;
             }
             return $this->ok($data);
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return $this->fail($e->getMessage(), 500);
         }
     }
@@ -173,5 +174,10 @@ class PaymentController extends Controller
             $this->logDataTelegram($e->getMessage());
             return $this->fail($e->getMessage(), 500);
         }
+    }
+
+    public function logData()
+    {
+        $this->logRequestTelegram();
     }
 }
