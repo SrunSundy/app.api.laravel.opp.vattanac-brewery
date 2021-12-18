@@ -73,6 +73,11 @@ class CartProduct extends Model
     |--------------------------------------------------------------------------
     */
 
+    public static function qtyCnt($params)
+    {
+        return self::filter($params)->sum("quantity");
+    }
+
     public static function cnt($params)
     {
         return self::filter($params)->count();

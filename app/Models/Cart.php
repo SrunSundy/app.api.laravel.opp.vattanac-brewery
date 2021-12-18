@@ -135,6 +135,16 @@ class Cart extends Model
         return $list;
     }
 
+    public static function productQtyCnt($params){
+        $cart = self::filter($params)->first();
+        $cnt = 0;
+        if($cart){
+            $params["cart_id"] = $cart->id;
+            $cnt = CartProduct::qtyCnt($params);
+        }
+        return $cnt;
+    }
+
 
     public static function productCnt($params){
         $cart = self::filter($params)->first();

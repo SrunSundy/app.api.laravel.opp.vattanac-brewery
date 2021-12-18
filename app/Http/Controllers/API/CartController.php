@@ -47,7 +47,8 @@ class CartController extends Controller
        
         try {
             $this->getParams();
-            $item["cnt"] = Cart::productCnt($this->params);
+            //$item["cnt"] = Cart::productCnt($this->params);
+            $item["cnt"] = Cart::productQtyCnt($this->params);
             return $this->ok($item);
         } catch (Exception $e) {
             return $this->fail($e->getMessage(), 500);
