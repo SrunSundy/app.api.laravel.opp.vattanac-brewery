@@ -19,13 +19,16 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function login(LoginRequest $request)
-    {
-        if (!$token = Auth::attempt([
+    {   
+        $token = Auth::attempt([
             'contact_number' => $request->phone_number,
             'password' => $request->password,
-        ])) {
+            'is_enable' => 1
+        ]);
+        if (!$token) {
             return $this->fail(__('validation.incorrect', ['attribute' => __('validation.attributes.phone_number_or_password')]));
         }
+
         $data = $this->respondWithToken($token);
         $data["user"] =  Auth::user();
         return $this->ok($data);
